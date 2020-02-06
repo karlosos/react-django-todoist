@@ -10,7 +10,7 @@ export const IndividualProject = ({ project }) => {
 
     const deleteProject = docId => {
         firebase
-            .firestore
+            .firestore()
             .collection('projects')
             .doc(docId)
             .delete()
