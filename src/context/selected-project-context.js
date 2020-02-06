@@ -11,4 +11,4 @@ export const SelectedProjectProvider = ({children}) => {
     );
 };
 
-export const useSelectedProjectvalue = () => useContext(SelectedProjectContext);
+export const useSelectedProjectValue = () => useContext(SelectedProjectContext);
