@@ -17,20 +17,21 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --watchAll",
     "eject": "react-scripts eject"
   },
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.js",
       "!src/index.js",
+      "!src/firebase.prod.js",
       "!src/hooks/*.js",
-      "!src/context.js"
+      "!src/context/*.js"
     ],
     "coverageThreshold": {
       "global": {
         "branches": 90,
-        "function": 90,
+        "functions": 90,
         "lines": 90,
         "statements": 90
       }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Checkbox } from './Chechbox';
+import { Checkbox } from './Checkbox';
 import { AddTask } from './AddTask';
 import { useTasks } from '../hooks';
 import { collatedTasks } from '../constants';
