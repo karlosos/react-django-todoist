@@ -148,11 +148,133 @@ $generic-bg: #78db3f;
 /* Darkmode
      ============================================ */
 .darkmode {
+  $dark-mode-text-color: #e1e1e1;
+  $dark-mode-main: #282828;
+  $dark-mode-lighter: #1e1e1e;
+  $dark-mode-darker: #171717;
+  $dark-mode-text-color-darker: rgb(128, 128, 128);
+  $dark-mode-border-color: rgba(255,255,255,0.1);
+
+  background-color: $dark-mode-main;
   header {
     -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.15);
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.15);
     background-color: #282828;
     border-color: transparent;
+  }
+
+  .sidebar {
+    border-right: none;
+    background-color: $dark-mode-main;
+    color: $dark-mode-text-color;
+
+    .sidebar__generic {
+      li {
+        color:  $dark-mode-text-color;
+
+        &:hover {
+          background-color: $dark-mode-lighter;
+        }
+
+        &.active {
+          background-color: $dark-mode-lighter;
+        }
+
+        div:nth-child(1) {
+          span:first-of-type {
+            svg {
+              color: $generic-bg;
+            }
+          }
+        }
+      }
+    }
+
+    .sidebar__middle {
+      border-color: $dark-mode-border-color;
+      span {
+        color: $dark-mode-text-color;
+      }
+      h2 {
+        color: $dark-mode-text-color;
+      }
+    }
+
+    .sidebar__projects {
+      li {
+        color:  $dark-mode-text-color;
+
+        &:hover {
+          background-color: $dark-mode-lighter;
+        }
+
+        &.active {
+          background-color: $dark-mode-lighter;
+        }
+      }
+    }
+  }
+
+  .tasks {
+    border-right: none;
+    background-color: $dark-mode-lighter;
+    color: $dark-mode-text-color;
+
+    .tasks__list li {
+      color: $dark-mode-text-color;
+      border-color: $dark-mode-border-color;
+    }
+  }
+
+  .add-task__content {
+    background-color: $dark-mode-darker !important;
+    border-color: $dark-mode-border-color;
+    color: $dark-mode-text-color;
+  }
+
+  .add-task__text {
+    color: $dark-mode-text-color-darker;
+  }
+
+  .add-task__cancel {
+    color: $dark-mode-text-color-darker;
+  }
+
+  .task-date {
+    color: $dark-mode-text-color;
+    background-color: $dark-mode-main;
+
+    .task-date__list li {
+      color: $dark-mode-text-color;
+      border-color: $dark-mode-border-color;
+
+      &:hover {
+        background-color: $dark-mode-lighter;
+      }
+    }
+  }
+
+  .project-overlay {
+    color: $dark-mode-text-color;
+    background-color: $dark-mode-main;
+
+    .project-overlay__list li {
+      color: $dark-mode-text-color;
+      border-color: $dark-mode-border-color;
+
+      &:hover {
+        background-color: $dark-mode-lighter;
+      }
+    }
+  }
+
+  .add-task__overlay .add-task__main  {
+    background-color: $dark-mode-main;
+    color: $dark-mode-text-color;
+  }
+
+  .add-task__overlay {
+    background: rgba(5, 5, 5, 0.6);
   }
 }
 
