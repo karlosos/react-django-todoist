@@ -347,7 +347,7 @@ header {
               border-radius: 3px;
               background-color: rgba(255, 255, 255, 0.2);
             }
-            
+
             @include no-select();
             margin-right: 15px;
             font-size: 30px;
@@ -770,12 +770,29 @@ header {
   @include no-select;
   cursor: pointer;
   margin-bottom: 20px;
+
+  &:hover {
+    .add-task__plus,
+    .add-project__plus  {
+      background-color: $generic-bg;
+      color: white;
+    }
+
+    .add-task__text,
+    .add-project__text {
+      color: $generic-bg;
+    }
+  }
 }
 
 .add-task__plus,
 .add-project__plus {
   color: $generic-bg;
   font-size: 18px;
+  display: inline-block;
+  width: 18px;
+  text-align: center;
+  border-radius: 100%;
 }
 
 .add-task__text,
