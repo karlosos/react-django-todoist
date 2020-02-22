@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import { FaPizzaSlice } from 'react-icons/fa';
-import PropTypes from 'prop-types';
-import { AddTask } from '../AddTask';
+import React, { useState } from "react";
+import { FaPizzaSlice } from "react-icons/fa";
+import PropTypes from "prop-types";
+import { AddTask } from "../AddTask";
+import DarkModeToggle from "react-dark-mode-toggle";
 
 export const Header = ({ darkMode, setDarkMode }) => {
   const [shouldShowMain, setShouldShowMain] = useState(false);
@@ -33,15 +34,11 @@ export const Header = ({ darkMode, setDarkMode }) => {
               </button>
             </li>
             <li className="settings__darkmode">
-              <button
-                data-testid="dark-mode-action"
-                aria-label="Darkmode on/off"
-                type="button"
-                onClick={() => setDarkMode(!darkMode)}
-                onKeyDown={() => setDarkMode(!darkMode)}
-              >
-                <FaPizzaSlice />
-              </button>
+              <DarkModeToggle
+                onChange={setDarkMode}
+                checked={darkMode}
+                size={80}
+              />
             </li>
           </ul>
         </div>
@@ -59,5 +56,5 @@ export const Header = ({ darkMode, setDarkMode }) => {
 
 Header.propTypes = {
   darkMode: PropTypes.bool.isRequired,
-  setDarkMode: PropTypes.func.isRequired,
+  setDarkMode: PropTypes.func.isRequired
 };
