@@ -212,6 +212,18 @@ $generic-bg: #2879de;
           background-color: $dark-mode-lighter;
         }
       }
+
+      .project-delete-modal {
+        .project-delete-modal__inner {
+          background-color: $dark-mode-lighter;
+        }
+      }
+    }
+
+    .add-project__name {
+      background-color: $dark-mode-darker !important;
+      border-color: $dark-mode-border-color;
+      color: $dark-mode-text-color;
     }
   }
 
@@ -408,14 +420,18 @@ header {
   &__project {
     cursor: pointer;
 
+    .project-item {
+      display: flex;
+    }
+
     div:nth-child(1) {
-      padding: 5px 0;
+      padding: 3px 0;
       padding-left: 10px;
       padding-right: 15px;
       width: 100%;
-      display: -webkit-box;
-      display: -ms-flexbox;
-      display: flex;
+      // display: -webkit-box;
+      // display: -ms-flexbox;
+      //display: flex;
       -webkit-box-align: center;
       -ms-flex-align: center;
       align-items: center;
@@ -560,7 +576,7 @@ header {
     @include box-overlay();
     z-index: 99;
     width: 200px;
-    padding: 10px;
+    padding: 15px !important;
     top: 10px;
     right: 0;
     background-color: white;

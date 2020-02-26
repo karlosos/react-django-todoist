@@ -52,7 +52,7 @@ describe('<IndividualProject />', () => {
 
     it('renders the delete overlay and then deletes a project using onClick', () => {
       const { queryByTestId, getByText } = render(
-        <IndividualProject project={project} />
+        <IndividualProject project={project} active />
       )
 
       fireEvent.click(queryByTestId('delete-project'))
@@ -65,7 +65,7 @@ describe('<IndividualProject />', () => {
 
     it('renders the delete overlay and then cancels using onClick', () => {
       const { queryByTestId, getByText } = render(
-        <IndividualProject project={project} />
+        <IndividualProject project={project} active />
       )
 
       fireEvent.click(queryByTestId('delete-project'))
@@ -78,7 +78,7 @@ describe('<IndividualProject />', () => {
 
     it('renders the delete overlay and then cancels using onKeyDown', () => {
       const { queryByTestId, getByText } = render(
-        <IndividualProject project={project} />
+        <IndividualProject project={project} active />
       )
 
       fireEvent.keyDown(queryByTestId('delete-project'))
