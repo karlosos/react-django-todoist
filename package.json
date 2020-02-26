@@ -18,7 +18,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --watchAll",
+    "test": "standard && react-scripts test --watchAll",
+    "test-coverage": "standard && react-scripts test --coverage --watchAll",
     "eject": "react-scripts eject"
   },
   "jest": {
@@ -59,5 +60,10 @@
   },
   "devDependencies": {
     "eslint-plugin-react-hooks": "^2.3.0"
+  },
+  "standard": {
+    "env": [
+      "jest"
+    ]
   }
 }

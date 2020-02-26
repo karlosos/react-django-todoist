@@ -1,8 +1,8 @@
-import React from 'react';
-import { render, fireEvent, cleanup } from '@testing-library/react';
-import { IndividualProject } from '../components/IndividualProject';
+import React from 'react'
+import { render, fireEvent, cleanup } from '@testing-library/react'
+import { IndividualProject } from '../components/IndividualProject'
 
-beforeEach(cleanup); // thanks!
+beforeEach(cleanup) // thanks!
 
 jest.mock('../firebase', () => ({
   firebase: {
@@ -12,16 +12,16 @@ jest.mock('../firebase', () => ({
           delete: jest.fn(() =>
             Promise.resolve('Never mock firebase, but I did!')
           ),
-          update: jest.fn(),
-        })),
-      })),
-    })),
-  },
-}));
+          update: jest.fn()
+        }))
+      }))
+    }))
+  }
+}))
 
 jest.mock('../context', () => ({
   useSelectedProjectValue: jest.fn(() => ({
-    setSelectedProject: jest.fn(() => 'INBOX'),
+    setSelectedProject: jest.fn(() => 'INBOX')
   })),
   useProjectsValue: jest.fn(() => ({
     setProjects: jest.fn(),
@@ -30,63 +30,63 @@ jest.mock('../context', () => ({
         name: '🙌 THE OFFICE',
         projectId: '1',
         userId: 'jlIFXIwyAL3tzHMtzRbw',
-        docId: 'michael-scott',
-      },
-    ],
-  })),
-}));
+        docId: 'michael-scott'
+      }
+    ]
+  }))
+}))
 
 describe('<IndividualProject />', () => {
   const project = {
     name: '🙌 THE OFFICE',
     projectId: '1',
     userId: 'jlIFXIwyAL3tzHMtzRbw',
-    docId: 'michael-scott',
-  };
+    docId: 'michael-scott'
+  }
 
   describe('Success', () => {
     it('renders our project', () => {
-      const { getByText } = render(<IndividualProject project={project} />);
-      expect(getByText('🙌 THE OFFICE')).toBeTruthy();
-    });
+      const { getByText } = render(<IndividualProject project={project} />)
+      expect(getByText('🙌 THE OFFICE')).toBeTruthy()
+    })
 
     it('renders the delete overlay and then deletes a project using onClick', () => {
       const { queryByTestId, getByText } = render(
         <IndividualProject project={project} />
-      );
+      )
 
-      fireEvent.click(queryByTestId('delete-project'));
+      fireEvent.click(queryByTestId('delete-project'))
       expect(
         getByText('Are you sure you want to delete this project?')
-      ).toBeTruthy();
+      ).toBeTruthy()
 
-      fireEvent.click(getByText('Delete'));
-    });
+      fireEvent.click(getByText('Delete'))
+    })
 
     it('renders the delete overlay and then cancels using onClick', () => {
       const { queryByTestId, getByText } = render(
         <IndividualProject project={project} />
-      );
+      )
 
-      fireEvent.click(queryByTestId('delete-project'));
+      fireEvent.click(queryByTestId('delete-project'))
       expect(
         getByText('Are you sure you want to delete this project?')
-      ).toBeTruthy();
+      ).toBeTruthy()
 
-      fireEvent.click(getByText('Cancel'));
-    });
+      fireEvent.click(getByText('Cancel'))
+    })
 
     it('renders the delete overlay and then cancels using onKeyDown', () => {
       const { queryByTestId, getByText } = render(
         <IndividualProject project={project} />
-      );
+      )
 
-      fireEvent.keyDown(queryByTestId('delete-project'));
+      fireEvent.keyDown(queryByTestId('delete-project'))
       expect(
         getByText('Are you sure you want to delete this project?')
-      ).toBeTruthy();
+      ).toBeTruthy()
 
-      fireEvent.keyDown(getByText('Cancel'));
-    });
-  });
-});
+      fireEvent.keyDown(getByText('Cancel'))
+    })
+  })
+})

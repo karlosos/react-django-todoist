@@ -1,42 +1,42 @@
-import React, { useState } from "react";
-import { FaRegSun, FaMoon } from "react-icons/fa";
-import PropTypes from "prop-types";
-import { AddTask } from "../AddTask";
+import React, { useState } from 'react'
+import { FaRegSun, FaMoon } from 'react-icons/fa'
+import PropTypes from 'prop-types'
+import { AddTask } from '../AddTask'
 
 export const Header = ({ darkMode, setDarkMode }) => {
-  const [shouldShowMain, setShouldShowMain] = useState(false);
-  const [showQuickAddTask, setShowQuickAddTask] = useState(false);
+  const [shouldShowMain, setShouldShowMain] = useState(false)
+  const [showQuickAddTask, setShowQuickAddTask] = useState(false)
 
   return (
-    <header className="header" data-testid="header">
+    <header className='header' data-testid='header'>
       <nav>
-        <div className="logo">
-          <img src="/images/logo.png" alt="Todoist" />
+        <div className='logo'>
+          <img src='/images/logo.png' alt='Todoist' />
         </div>
-        <div className="settings">
+        <div className='settings'>
           <ul>
-            <li className="settings__add">
+            <li className='settings__add'>
               <button
-                data-testid="quick-add-task-action"
-                aria-label="Quick add task"
-                type="button"
+                data-testid='quick-add-task-action'
+                aria-label='Quick add task'
+                type='button'
                 onClick={() => {
-                  setShowQuickAddTask(true);
-                  setShouldShowMain(true);
+                  setShowQuickAddTask(true)
+                  setShouldShowMain(true)
                 }}
                 onKeyDown={() => {
-                  setShowQuickAddTask(true);
-                  setShouldShowMain(true);
+                  setShowQuickAddTask(true)
+                  setShouldShowMain(true)
                 }}
               >
                 +
               </button>
             </li>
-            <li className="settings__darkmode">
-            <button
-                data-testid="dark-mode-action"
-                aria-label="Darkmode on/off"
-                type="button"
+            <li className='settings__darkmode'>
+              <button
+                data-testid='dark-mode-action'
+                aria-label='Darkmode on/off'
+                type='button'
                 onClick={() => setDarkMode(!darkMode)}
                 onKeyDown={() => setDarkMode(!darkMode)}
               >
@@ -54,10 +54,10 @@ export const Header = ({ darkMode, setDarkMode }) => {
         setShowQuickAddTask={setShowQuickAddTask}
       />
     </header>
-  );
-};
+  )
+}
 
 Header.propTypes = {
   darkMode: PropTypes.bool.isRequired,
   setDarkMode: PropTypes.func.isRequired
-};
+}

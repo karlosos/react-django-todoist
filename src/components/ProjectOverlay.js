@@ -1,34 +1,34 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { useProjectsValue } from '../context';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { useProjectsValue } from '../context'
 
 export const ProjectOverlay = ({
   setProject,
   showProjectOverlay,
-  setShowProjectOverlay,
+  setShowProjectOverlay
 }) => {
-  const { projects } = useProjectsValue();
+  const { projects } = useProjectsValue()
 
   return (
     projects &&
     showProjectOverlay && (
-      <div className="project-overlay" data-testid="project-overlay">
-        <ul className="project-overlay__list">
+      <div className='project-overlay' data-testid='project-overlay'>
+        <ul className='project-overlay__list'>
           {projects.map(project => (
             <li key={project.projectId}>
               <div
-                data-testid="project-overlay-action"
+                data-testid='project-overlay-action'
                 onClick={() => {
-                  setProject(project.projectId);
-                  setShowProjectOverlay(false);
+                  setProject(project.projectId)
+                  setShowProjectOverlay(false)
                 }}
                 onKeyDown={() => {
-                  setProject(project.projectId);
-                  setShowProjectOverlay(false);
+                  setProject(project.projectId)
+                  setShowProjectOverlay(false)
                 }}
-                role="button"
+                role='button'
                 tabIndex={0}
-                aria-label="Select the task project"
+                aria-label='Select the task project'
               >
                 {project.name}
               </div>
@@ -37,9 +37,9 @@ export const ProjectOverlay = ({
         </ul>
       </div>
     )
-  );
-};
+  )
+}
 
 ProjectOverlay.propTypes = {
-  projects: PropTypes.array,
-};
+  projects: PropTypes.array
+}

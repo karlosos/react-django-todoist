@@ -1,38 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import {
   FaChevronDown,
   FaInbox,
   FaRegCalendarAlt,
-  FaRegCalendar,
-} from 'react-icons/fa';
-import { Projects } from '../Projects';
-import { useSelectedProjectValue } from '../../context';
-import { AddProject } from '../AddProject';
+  FaRegCalendar
+} from 'react-icons/fa'
+import { Projects } from '../Projects'
+import { useSelectedProjectValue } from '../../context'
+import { AddProject } from '../AddProject'
 
 export const Sidebar = () => {
-  const { setSelectedProject } = useSelectedProjectValue();
-  const [active, setActive] = useState('inbox');
-  const [showProjects, setShowProjects] = useState(true);
+  const { setSelectedProject } = useSelectedProjectValue()
+  const [active, setActive] = useState('inbox')
+  const [showProjects, setShowProjects] = useState(true)
 
   return (
-    <div className="sidebar" data-testid="sidebar">
-      <ul className="sidebar__generic">
+    <div className='sidebar' data-testid='sidebar'>
+      <ul className='sidebar__generic'>
         <li
-          data-testid="inbox"
+          data-testid='inbox'
           className={active === 'inbox' ? 'active' : undefined}
         >
           <div
-            data-testid="inbox-action"
-            aria-label="Show inbox tasks"
+            data-testid='inbox-action'
+            aria-label='Show inbox tasks'
             tabIndex={0}
-            role="button"
+            role='button'
             onClick={() => {
-              setActive('inbox');
-              setSelectedProject('INBOX');
+              setActive('inbox')
+              setSelectedProject('INBOX')
             }}
             onKeyDown={() => {
-              setActive('inbox');
-              setSelectedProject('INBOX');
+              setActive('inbox')
+              setSelectedProject('INBOX')
             }}
           >
             <span>
@@ -42,21 +42,21 @@ export const Sidebar = () => {
           </div>
         </li>
         <li
-          data-testid="today"
+          data-testid='today'
           className={active === 'today' ? 'active' : undefined}
         >
           <div
-            data-testid="today-action"
+            data-testid='today-action'
             aria-label="Show today's tasks"
             tabIndex={0}
-            role="button"
+            role='button'
             onClick={() => {
-              setActive('today');
-              setSelectedProject('TODAY');
+              setActive('today')
+              setSelectedProject('TODAY')
             }}
             onKeyDown={() => {
-              setActive('today');
-              setSelectedProject('TODAY');
+              setActive('today')
+              setSelectedProject('TODAY')
             }}
           >
             <span>
@@ -66,21 +66,21 @@ export const Sidebar = () => {
           </div>
         </li>
         <li
-          data-testid="next_7"
+          data-testid='next_7'
           className={active === 'next_7' ? 'active' : undefined}
         >
           <div
-            data-testid="next_7-action"
-            aria-label="Show tasks for the next 7 days"
+            data-testid='next_7-action'
+            aria-label='Show tasks for the next 7 days'
             tabIndex={0}
-            role="button"
+            role='button'
             onClick={() => {
-              setActive('next_7');
-              setSelectedProject('NEXT_7');
+              setActive('next_7')
+              setSelectedProject('NEXT_7')
             }}
             onKeyDown={() => {
-              setActive('next_7');
-              setSelectedProject('NEXT_7');
+              setActive('next_7')
+              setSelectedProject('NEXT_7')
             }}
           >
             <span>
@@ -91,11 +91,11 @@ export const Sidebar = () => {
         </li>
       </ul>
       <div
-        className="sidebar__middle"
-        aria-label="Show/hide projects"
+        className='sidebar__middle'
+        aria-label='Show/hide projects'
         onClick={() => setShowProjects(!showProjects)}
         onKeyDown={() => setShowProjects(!showProjects)}
-        role="button"
+        role='button'
         tabIndex={0}
       >
         <span>
@@ -106,9 +106,9 @@ export const Sidebar = () => {
         <h2>Projects</h2>
       </div>
 
-      <ul className="sidebar__projects">{showProjects && <Projects active={active} setActive={setActive} />}</ul>
+      <ul className='sidebar__projects'>{showProjects && <Projects active={active} setActive={setActive} />}</ul>
 
       {showProjects && <AddProject />}
     </div>
-  );
-};
+  )
+}
