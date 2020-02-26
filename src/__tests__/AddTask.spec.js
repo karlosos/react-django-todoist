@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent, cleanup } from '@testing-library/react';
+import { render, fireEvent, cleanup, act, wait } from '@testing-library/react';
 import { AddTask } from '../components/AddTask';
 import { useSelectedProjectValue } from '../context';
 
@@ -148,7 +148,7 @@ describe('<AddTask />', () => {
       expect(setShowQuickAddTask).toHaveBeenCalled();
     });
 
-    it('renders <AddTask /> and adds a task to TODAY', () => {
+    it('renders <AddTask /> and adds a task to TODAY', async () => {
       useSelectedProjectValue.mockImplementation(() => ({
         selectedProject: 'TODAY',
       }));
@@ -172,10 +172,10 @@ describe('<AddTask />', () => {
       );
 
       fireEvent.click(queryByTestId('add-task'));
-      expect(setShowQuickAddTask).toHaveBeenCalled();
+      await wait(() => expect(setShowQuickAddTask).toHaveBeenCalled());
     });
 
-    it('renders <AddTask /> and adds a task to NEXT_7', () => {
+    it('renders <AddTask /> and adds a task to NEXT_7', async () => {
       useSelectedProjectValue.mockImplementation(() => ({
         selectedProject: 'NEXT_7',
       }));
@@ -199,10 +199,10 @@ describe('<AddTask />', () => {
       );
 
       fireEvent.click(queryByTestId('add-task'));
-      expect(setShowQuickAddTask).toHaveBeenCalled();
+      await wait(() => expect(setShowQuickAddTask).toHaveBeenCalled())
     });
 
-    it('renders <AddTask /> and adds a task with a task date of TODAY', () => {
+    it('renders <AddTask /> and adds a task with a task date of TODAY', async () => {
       useSelectedProjectValue.mockImplementation(() => ({
         selectedProject: '1',
       }));
@@ -232,9 +232,10 @@ describe('<AddTask />', () => {
       expect(queryByTestId('task-date-overlay')).toBeFalsy();
 
       fireEvent.click(queryByTestId('add-task'));
+      await wait();
     });
 
-    it('renders <AddTask /> and adds a task with a task date of TOMORROW', () => {
+    it('renders <AddTask /> and adds a task with a task date of TOMORROW', async () => {
       useSelectedProjectValue.mockImplementation(() => ({
         selectedProject: '1',
       }));
@@ -264,9 +265,10 @@ describe('<AddTask />', () => {
       expect(queryByTestId('task-date-overlay')).toBeFalsy();
 
       fireEvent.click(queryByTestId('add-task'));
+      await wait();
     });
 
-    it('renders <AddTask /> and adds a task with a task date of NEXT_7', () => {
+    it('renders <AddTask /> and adds a task with a task date of NEXT_7', async () => {
       useSelectedProjectValue.mockImplementation(() => ({
         selectedProject: '1',
       }));
@@ -296,6 +298,7 @@ describe('<AddTask />', () => {
       expect(queryByTestId('task-date-overlay')).toBeFalsy();
 
       fireEvent.click(queryByTestId('add-task'));
+      await wait();
     });
   });
 });

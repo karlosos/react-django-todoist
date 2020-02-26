@@ -63,19 +63,6 @@ describe('<IndividualProject />', () => {
       fireEvent.click(getByText('Delete'));
     });
 
-    it('renders the delete overlay and then deletes a project using onKeyDown', () => {
-      const { queryByTestId, getByText } = render(
-        <IndividualProject project={project} />
-      );
-
-      fireEvent.keyDown(queryByTestId('delete-project'));
-      expect(
-        getByText('Are you sure you want to delete this project?')
-      ).toBeTruthy();
-
-      fireEvent.click(getByText('Delete'));
-    });
-
     it('renders the delete overlay and then cancels using onClick', () => {
       const { queryByTestId, getByText } = render(
         <IndividualProject project={project} />

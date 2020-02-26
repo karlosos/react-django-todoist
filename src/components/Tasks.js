@@ -32,7 +32,7 @@ export const Tasks = () => {
             <ul className="tasks__list">
                 {tasks.map(task => (
                     <li key={`${task.id}`}>
-                        <Checkbox id={task.id} />
+                        <Checkbox id={task.id} taskDesc={task.task} />
                         <span>{task.task}</span>
                     </li>
                 ))}

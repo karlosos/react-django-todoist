@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, cleanup, fireEvent } from '@testing-library/react';
+import { render, cleanup, fireEvent, wait } from '@testing-library/react';
 import { AddProject } from '../components/AddProject';
 import { useSelectedProjectValue } from '../context';
 
@@ -61,7 +61,7 @@ describe('<AddProject />', () => {
       expect(queryByTestId('add-project')).toBeTruthy();
     });
 
-    it('renders <AddProject /> and adds a project using onClick', () => {
+    it('renders <AddProject /> and adds a project using onClick', async () => {
       const { queryByTestId } = render(<AddProject shouldShow />);
       expect(queryByTestId('add-project')).toBeTruthy();
 
@@ -72,6 +72,7 @@ describe('<AddProject />', () => {
         'Best project in the world!'
       );
       fireEvent.click(queryByTestId('add-project-submit'));
+      await wait()
     });
 
     it('renders <AddProject /> and adds a project using onKeyDown', () => {

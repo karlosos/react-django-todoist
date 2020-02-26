@@ -12,7 +12,10 @@ beforeEach(cleanup);
 describe('<Header />', () => {
   describe('Success', () => {
     it('renders the header component', () => {
-      const { queryByTestId } = render(<Header />);
+      const darkMode = false;
+      const setDarkMode = jest.fn(() => !darkMode);
+
+      const { queryByTestId } = render(<Header darkMode={darkMode} setDarkMode={setDarkMode} />);
       expect(queryByTestId('header')).toBeTruthy();
     });
 
@@ -47,8 +50,9 @@ describe('<Header />', () => {
 
     it('renders the header component and set quick add task to true using onClick', () => {
       const darkMode = false;
+      const setDarkMode = jest.fn(() => !darkMode);
 
-      const { queryByTestId } = render(<Header darkMode={darkMode} />);
+      const { queryByTestId } = render(<Header darkMode={darkMode} setDarkMode={setDarkMode} />);
       expect(queryByTestId('header')).toBeTruthy();
 
       fireEvent.click(queryByTestId('quick-add-task-action'));
@@ -57,8 +61,9 @@ describe('<Header />', () => {
 
     it('renders the header component and set quick add task to true using onKeyDown', () => {
       const darkMode = false;
+      const setDarkMode = jest.fn(() => !darkMode);
 
-      const { queryByTestId } = render(<Header darkMode={darkMode} />);
+      const { queryByTestId } = render(<Header darkMode={darkMode} setDarkMode={setDarkMode} />);
       expect(queryByTestId('header')).toBeTruthy();
 
       fireEvent.keyDown(queryByTestId('quick-add-task-action'));
@@ -67,8 +72,9 @@ describe('<Header />', () => {
 
     it('renders the header component and set quick add task to true and then false using onKeyDown', () => {
       const darkMode = false;
+      const setDarkMode = jest.fn(() => !darkMode);
 
-      const { queryByTestId } = render(<Header darkMode={darkMode} />);
+      const { queryByTestId } = render(<Header darkMode={darkMode} setDarkMode={setDarkMode} />);
       expect(queryByTestId('header')).toBeTruthy();
 
       fireEvent.keyDown(queryByTestId('quick-add-task-action'));

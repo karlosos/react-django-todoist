@@ -32,7 +32,9 @@ describe('<ProjectOverlay', () => {
     });
 
     it('renders the projects and selects an active project using onClick', () => {
-      const { queryByTestId } = render(<Projects activeValue="1" />);
+      const active = "1"
+      const setActive = jest.fn()
+      const { queryByTestId } = render(<Projects active={active} setActive={setActive} />);
       expect(queryByTestId('project-action')).toBeTruthy();
 
       fireEvent.click(queryByTestId('project-action'));
@@ -42,7 +44,9 @@ describe('<ProjectOverlay', () => {
     });
 
     it('renders the projects and selects an active project using onKeyDown', () => {
-      const { queryByTestId } = render(<Projects activeValue="1" />);
+      const active = "1"
+      const setActive = jest.fn()
+      const { queryByTestId } = render(<Projects active={active} setActive={setActive}  />);
       expect(queryByTestId('project-action')).toBeTruthy();
 
       fireEvent.keyDown(queryByTestId('project-action'));
@@ -52,7 +56,9 @@ describe('<ProjectOverlay', () => {
     });
 
     it('renders the projects with no active value', () => {
-      const { queryByTestId } = render(<Projects activeValue="1" />);
+      const active = "inbox"
+      const setActive = jest.fn()
+      const { queryByTestId } = render(<Projects active={active} setActive={setActive}  />);
       expect(queryByTestId('project-action')).toBeTruthy();
 
       fireEvent.keyDown(queryByTestId('project-action'));

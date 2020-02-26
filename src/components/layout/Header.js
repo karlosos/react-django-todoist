@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FaPizzaSlice } from "react-icons/fa";
 import PropTypes from "prop-types";
 import { AddTask } from "../AddTask";
-import DarkModeToggle from "react-dark-mode-toggle";
+import DarkModeToggle from 'react-dark-mode-toggle';
 
 export const Header = ({ darkMode, setDarkMode }) => {
   const [shouldShowMain, setShouldShowMain] = useState(false);
