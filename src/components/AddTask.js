@@ -6,7 +6,7 @@ import { firebase } from '../firebase'
 import { useSelectedProjectValue } from '../context'
 import { ProjectOverlay } from './ProjectOverlay'
 import { TaskDate } from './TaskDate'
-import ContentEditable from 'react-contenteditable'
+import { TaskInput } from './TaskInput'
 
 export const AddTask = ({
   showAddTaskMain = true,
@@ -22,23 +22,6 @@ export const AddTask = ({
   const [showTaskDate, setShowTaskDate] = useState(false)
 
   const { selectedProject } = useSelectedProjectValue()
-  const contentEditable = React.createRef()
-
-  const pastePlainText = evt => {
-    evt.preventDefault()
-
-    const text = evt.clipboardData.getData('text/plain')
-    document.execCommand('insertHTML', false, text)
-  }
-
-  const disableNewlines = evt => {
-    const keyCode = evt.keyCode || evt.which
-
-    if (keyCode === 13) {
-      evt.returnValue = false
-      if (evt.preventDefault) evt.preventDefault()
-    }
-  }
 
   const addTask = () => {
     const projectId = project || selectedProject
@@ -132,28 +115,7 @@ export const AddTask = ({
             showTaskDate={showTaskDate}
             setShowTaskDate={setShowTaskDate}
           />
-          <ContentEditable
-            innerRef={contentEditable}
-            html={task}
-            disabled={false}
-            className='add-task__content'
-            aria-label='Enter your task'
-            data-testid='add-task-content'
-            suppressContentEditableWarning
-            onChange={e => { setTask(e.target.value); console.log(e.target.value) }}
-            onKeyPress={disableNewlines}
-            onPaste={pastePlainText}
-          />
-          {/* <div
-            contentEditable='true'
-            className='add-task__content'
-            aria-label='Enter your task'
-            data-testid='add-task-content'
-            suppressContentEditableWarning
-            onInput={e => { setTask(e.target.textContent); console.log(e.target.textContent) }}
-          >
-            {task}
-          </div> */}
+          <TaskInput task={task} setTask={setTask} />
           <button
             type='button'
             className='add-task__submit'

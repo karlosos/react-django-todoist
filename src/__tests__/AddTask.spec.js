@@ -2,6 +2,7 @@ import React from 'react'
 import { render, fireEvent, cleanup, wait } from '@testing-library/react'
 import { AddTask } from '../components/AddTask'
 import { useSelectedProjectValue } from '../context'
+import userEvent from '@testing-library/user-event'
 
 beforeEach(cleanup)
 
@@ -164,10 +165,10 @@ describe('<AddTask />', () => {
       fireEvent.click(queryByTestId('show-main-action'))
       expect(queryByTestId('add-task-content')).toBeTruthy()
 
-      fireEvent.change(queryByTestId('add-task-content'), {
-        target: { value: 'I am a new task and I am amazing!' }
+      fireEvent.input(queryByTestId('add-task-content'), {
+        target: { innerHTML: 'I am a new task and I am amazing!' }
       })
-      expect(queryByTestId('add-task-content').value).toBe(
+      expect(queryByTestId('add-task-content').innerHTML).toBe(
         'I am a new task and I am amazing!'
       )
 
@@ -191,10 +192,10 @@ describe('<AddTask />', () => {
       fireEvent.click(queryByTestId('show-main-action'))
       expect(queryByTestId('add-task-content')).toBeTruthy()
 
-      fireEvent.change(queryByTestId('add-task-content'), {
-        target: { value: 'I am a new task and I am amazing!' }
+      fireEvent.input(queryByTestId('add-task-content'), {
+        target: { innerHTML: 'I am a new task and I am amazing!' }
       })
-      expect(queryByTestId('add-task-content').value).toBe(
+      expect(queryByTestId('add-task-content').innerHTML).toBe(
         'I am a new task and I am amazing!'
       )
 
@@ -212,11 +213,11 @@ describe('<AddTask />', () => {
       expect(queryByTestId('add-task-content')).toBeTruthy()
       expect(queryByTestId('add-task-main')).toBeTruthy()
 
-      fireEvent.change(queryByTestId('add-task-content'), {
-        target: { value: 'I am the most amazing task ever!' }
+      fireEvent.input(queryByTestId('add-task-content'), {
+        target: { innerHTML: 'I am a new task and I am amazing!' }
       })
-      expect(queryByTestId('add-task-content').value).toBe(
-        'I am the most amazing task ever!'
+      expect(queryByTestId('add-task-content').innerHTML).toBe(
+        'I am a new task and I am amazing!'
       )
 
       fireEvent.click(queryByTestId('show-task-date-overlay'))
@@ -245,11 +246,11 @@ describe('<AddTask />', () => {
       expect(queryByTestId('add-task-content')).toBeTruthy()
       expect(queryByTestId('add-task-main')).toBeTruthy()
 
-      fireEvent.change(queryByTestId('add-task-content'), {
-        target: { value: 'I am the most amazing task ever!' }
+      fireEvent.input(queryByTestId('add-task-content'), {
+        target: { innerHTML: 'I am a new task and I am amazing!' }
       })
-      expect(queryByTestId('add-task-content').value).toBe(
-        'I am the most amazing task ever!'
+      expect(queryByTestId('add-task-content').innerHTML).toBe(
+        'I am a new task and I am amazing!'
       )
 
       fireEvent.click(queryByTestId('show-task-date-overlay'))
@@ -278,11 +279,11 @@ describe('<AddTask />', () => {
       expect(queryByTestId('add-task-content')).toBeTruthy()
       expect(queryByTestId('add-task-main')).toBeTruthy()
 
-      fireEvent.change(queryByTestId('add-task-content'), {
-        target: { value: 'I am the most amazing task ever!' }
+      fireEvent.input(queryByTestId('add-task-content'), {
+        target: { innerHTML: 'I am a new task and I am amazing!' }
       })
-      expect(queryByTestId('add-task-content').value).toBe(
-        'I am the most amazing task ever!'
+      expect(queryByTestId('add-task-content').innerHTML).toBe(
+        'I am a new task and I am amazing!'
       )
 
       fireEvent.click(queryByTestId('show-task-date-overlay'))
@@ -300,5 +301,33 @@ describe('<AddTask />', () => {
       fireEvent.click(queryByTestId('add-task'))
       await wait()
     })
+  })
+
+  it('renders <AddTask /> add enter and adds a task to TODAY', async () => {
+    useSelectedProjectValue.mockImplementation(() => ({
+      selectedProject: 'TODAY'
+    }))
+
+    const showQuickAddTask = true
+    const setShowQuickAddTask = jest.fn(() => !showQuickAddTask)
+    const { queryByTestId } = render(
+      <AddTask
+        showQuickAddTask={showQuickAddTask}
+        setShowQuickAddTask={setShowQuickAddTask}
+      />
+    )
+    fireEvent.click(queryByTestId('show-main-action'))
+    expect(queryByTestId('add-task-content')).toBeTruthy()
+
+    fireEvent.input(queryByTestId('add-task-content'), {
+      target: { innerHTML: 'I am a new task and I am amazing!' }
+    })
+    expect(queryByTestId('add-task-content').innerHTML).toBe(
+      'I am a new task and I am amazing!'
+    )
+    userEvent.type(queryByTestId('add-task-content'), '\n')
+    userEvent.type(queryByTestId('add-task-content'), 'a')
+    fireEvent.click(queryByTestId('add-task'))
+    await wait(() => expect(setShowQuickAddTask).toHaveBeenCalled())
   })
 })
