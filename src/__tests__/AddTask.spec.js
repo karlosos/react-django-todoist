@@ -2,7 +2,6 @@ import React from 'react'
 import { render, fireEvent, cleanup, wait } from '@testing-library/react'
 import { AddTask } from '../components/AddTask'
 import { useSelectedProjectValue } from '../context'
-import userEvent from '@testing-library/user-event'
 
 beforeEach(cleanup)
 
@@ -303,7 +302,7 @@ describe('<AddTask />', () => {
     })
   })
 
-  it('renders <AddTask /> add enter and adds a task to TODAY', async () => {
+  it('renders <AddTask />, typin enter should do nothing, then adds a task to TODAY', async () => {
     useSelectedProjectValue.mockImplementation(() => ({
       selectedProject: 'TODAY'
     }))
@@ -325,8 +324,19 @@ describe('<AddTask />', () => {
     expect(queryByTestId('add-task-content').innerHTML).toBe(
       'I am a new task and I am amazing!'
     )
-    userEvent.type(queryByTestId('add-task-content'), '\n')
-    userEvent.type(queryByTestId('add-task-content'), 'a')
+
+    queryByTestId('add-task-content').focus()
+    // fireEvent.keyPress(document.activeElement || document.body, { key: 'A', code: 'KeyA', keyCode: 13 })
+    // fireEvent.keyDown(document.activeElement || document.body, { key: 'A', code: 'KeyA', keyCode: 13 })
+    // fireEvent.keyUp(document.activeElement || document.body, { key: 'A', code: 'KeyA', keyCode: 13 })
+
+    // fireEvent.keyPress(document.activeElement || document.body, { key: 'Enter', code: 'Enter', keyCode: 65 })
+    // fireEvent.keyDown(document.activeElement || document.body, { key: 'Enter', code: 'Enter', keyCode: 65 })
+    // fireEvent.keyUp(document.activeElement || document.body, { key: 'Enter', code: 'Enter', keyCode: 65 })
+    // TODO: update this later when user-event will implement this
+    // https://github.com/testing-library/user-event/pull/235
+    // https://github.com/testing-library/react-testing-library/issues/680
+
     fireEvent.click(queryByTestId('add-task'))
     await wait(() => expect(setShowQuickAddTask).toHaveBeenCalled())
   })
