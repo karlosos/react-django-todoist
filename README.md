@@ -1,54 +1,44 @@
 
-# Todo application made with React and Firebase
+<h1 align="center">A simplified todoist clone built with React and Firebase</h1>
 
-Description
+<div align="center">Auto formatted with standardjs, tested with jest 🎗</div>
 
-Insert screenshots
+![Tech logos](https://i.imgur.com/4OxMFz0.png)
 
-## What I've learned
+![App screenshot](https://i.imgur.com/OctvesO.png)
 
-React, Firebase
+## What is this and who is it for 🤷‍♀️
 
-## Functionality
+This was my first project in React that I've built in my spare time. It's meant to be showcase
+of my programming skills. 
 
-Show functionality
+I've learnt a lot from this project. Some concepts that I've grasped:
+- React with hooks
+- Javascript fundamentals
+- Firebase
+- Unit testing with jest
 
-## For developers
+## Features
 
-Currently there's only one user with id: `jlIFXIwyAL3tzHMtzRbw`.
+- Adding and removing tasks
+- Tasks categories (projects)
+- Dark mode 
 
-### Running the app
+## Setting up development environment 🛠
 
-Install requirements with
-
-```
-npm install
-```
-
-And then start server with `npm start`.
-
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- `git clone https://github.com/oldboyxx/jira_clone.git`
+- Create an empty `.env` file in root folder, copy `.env.example` contents into it, and fill in your firebase api keys.
+- `npm run install`
+- `npm start`
+- Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
 
-### Testing
+> Currently there's only one user with id: `jlIFXIwyAL3tzHMtzRbw`.
+
+## Testing 🚥
 
 Run tests with: ```npm test -- --coverage```
 
 HTML output will be available in `./coverage` folder.
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-
-### Building
-
-`npm run build` builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
