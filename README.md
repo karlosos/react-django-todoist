@@ -42,3 +42,15 @@ You will also see any lint errors in the console.
 Run tests with: ```npm test -- --coverage```
 
 HTML output will be available in `./coverage` folder.
+
+## Backend WIP ⚙️
+
+### Endpoints to design 📐
+
+- add project - {projectId, name, userId}
+- add task - {archived, projectId, task, date, userId}
+- update task - {taskId, archived} - generally patch object
+- delete project
+- get projects - {userId}
+- get tasks - {userId}
+
