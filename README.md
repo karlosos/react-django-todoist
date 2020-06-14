@@ -42,3 +42,54 @@ You will also see any lint errors in the console.
 Run tests with: ```npm test -- --coverage```
 
 HTML output will be available in `./coverage` folder.
+
+## Backend 👷
+
+1. Create virtual environment with:
+
+```
+virtualenv .venv
+```
+
+2. Then activate it
+
+```
+.venv\Scripts\activate
+```
+
+or 
+
+```
+source .venv/bin/activate
+```
+
+3. Install dependencies:
+
+```
+pip install -r requirements
+```
+
+4. Create database with:
+
+```
+python manage.py migrate
+```
+
+5. Create super user:
+
+```
+python manage.py createsuperuser --email admin@example.com --username admin
+```
+
+6. Run server:
+
+```
+python manage.py runserver
+```
+
+7. Run tests:
+
+```
+python manage.py test
+```
+
