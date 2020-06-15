@@ -1,7 +1,6 @@
 from django.test import TestCase
 from ..models import Task
-
-
+from ..serializers import TaskSerializer
 class TaskTest(TestCase):
     """
     Test module for Task model
