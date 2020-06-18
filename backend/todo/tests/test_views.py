@@ -168,3 +168,9 @@ class DeleteSingleTaskTest(TestCase):
         response = client.delete(
             reverse('get_delete_update_task', kwargs={'pk': 30}))
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+
+# TODO:
+# - refactor task
+# - Write test like here https://github.com/erdem/DRF-TDD-example/blob/master/todoapp/todos/tests.py
+# for Project

@@ -1,12 +1,15 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from backend.todo.serializers import UserSerializer, GroupSerializer
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.permissions import IsAuthenticated
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Task
-from .serializers import TaskSerializer
+from .models import Task, Project
+from .serializers import TaskSerializer, ProjectSerializer
+from .permissions import UserIsOwnerProject
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -68,3 +71,19 @@ def get_post_tasks(request):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ProjectListCreateAPIView(ListCreateAPIView):
+    serializer_class = ProjectSerializer
+
+    def get_queryset(self):
+        return Project.objects.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+
+class ProjectDetailAPIView(RetrieveUpdateDestroyAPIView):
+    serializer_class = ProjectSerializer
+    queryset = Project.objects.all()
+    permission_classes = (IsAuthenticated, UserIsOwnerProject)

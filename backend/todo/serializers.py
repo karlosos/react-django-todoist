@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from .models import Task
+from .models import Task, Project
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -19,3 +19,11 @@ class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
         fields = ('archived', 'project', 'task', 'created_at', 'updated_at')
+
+
+class ProjectSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+
+    class Meta:
+        model = Project
+        fields = ("user", "created", "name")
