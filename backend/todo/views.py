@@ -28,49 +28,14 @@ class GroupViewSet(viewsets.ModelViewSet):
     serializer_class = GroupSerializer
 
 
-@api_view(['GET', 'DELETE', 'PUT'])
-def get_delete_update_task(request, pk):
-    try:
-        task = Task.objects.get(pk=pk)
-    except Task.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-
-    # get details of a single task
-    if request.method == 'GET':
-        serializer = TaskSerializer(task)
-        return Response(serializer.data)
-    # delete a single task
-    elif request.method == 'DELETE':
-        task.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-    # update details of a single task
-    if request.method == 'PUT':
-        serializer = TaskSerializer(task, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_204_NO_CONTENT)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+class TaskViewSet(viewsets.ModelViewSet):
+    queryset = Task.objects.all()
+    serializer_class = TaskSerializer
 
 
-@api_view(['GET', 'POST'])
-def get_post_tasks(request):
-    # get all tasks
-    if request.method == 'GET':
-        tasks = Task.objects.all()
-        serializer = TaskSerializer(tasks, many=True)
-        return Response(serializer.data)
-    # insert a new record for a task
-    elif request.method == 'POST':
-        data = {
-            'archived': request.data.get('archived'),
-            'task': request.data.get('task'),
-            'project': request.data.get('project'),
-        }
-        serializer = TaskSerializer(data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+class ProjectViewSet(viewsets.ModelViewSet):
+    queryset = Project.objects.all()
+    serializer_class = ProjectSerializer
 
 
 class ProjectListCreateAPIView(ListCreateAPIView):

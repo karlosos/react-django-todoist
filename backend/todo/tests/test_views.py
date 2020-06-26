@@ -2,8 +2,9 @@ import json
 from rest_framework import status
 from django.test import TestCase, Client
 from django.urls import reverse
-from ..models import Task
-from ..serializers import TaskSerializer
+from django.contrib.auth.model import User
+from ..models import Task, Project
+from ..serializers import TaskSerializer, ProjectSerializer
 
 
 # initialize the APIClient app
@@ -14,15 +15,20 @@ class GetAllTasksTest(TestCase):
     """ Test module for GET all tasks API """
 
     def setUp(self):
+        testuser1 = User.objects.create_user(
+            username='testuser1',
+            password='abc'
+        )
+        testuser1.save()
         Task.objects.create(
             archived=False,
-            project='Sample project',
+            # project='Sample project',
             task='This is my task'
         )
 
         Task.objects.create(
             archived=True,
-            project='Sample project',
+            # project='Sample project',
             task='Second task'
         )
 
@@ -42,13 +48,13 @@ class GetSingleTaskTest(TestCase):
     def setUp(self):
         self.first = Task.objects.create(
             archived=False,
-            project='Sample project',
+            # project='Sample project',
             task='This is my task'
         )
 
         self.second = Task.objects.create(
             archived=True,
-            project='Sample project',
+            # project='Sample project',
             task='Second task'
         )
 
@@ -72,13 +78,13 @@ class CreateNewTaskTest(TestCase):
     def setUp(self):
         self.valid_payload = {
             'archived': False,
-            'project': 'Sample project',
+            # 'project': 'Sample project',
             'task': 'This is my task'
         }
 
         self.invalid_payload = {
             'archived': False,
-            'project': 'Sample project',
+            # 'project': 'Sample project',
             'task': ''
         }
 
@@ -105,25 +111,25 @@ class UpdateSingleTaskTest(TestCase):
     def setUp(self):
         self.first = Task.objects.create(
             archived=False,
-            project='Sample project',
+            # project='Sample project',
             task='This is my task'
         )
 
         self.second = Task.objects.create(
             archived=True,
-            project='Sample project',
+            # project='Sample project',
             task='Second task'
         )
 
         self.valid_payload = {
             'archived': False,
-            'project': 'Sample project',
+            # 'project': 'Sample project',
             'task': 'This is my task'
         }
 
         self.invalid_payload = {
             'archived': False,
-            'project': 'Sample project',
+            # 'project': 'Sample project',
             'task': ''
         }
 
@@ -149,13 +155,13 @@ class DeleteSingleTaskTest(TestCase):
     def setUp(self):
         self.first = Task.objects.create(
             archived=False,
-            project='Sample project',
+            # project='Sample project',
             task='This is my task'
         )
 
         self.second = Task.objects.create(
             archived=True,
-            project='Sample project',
+            # project='Sample project',
             task='Second task'
         )
 
