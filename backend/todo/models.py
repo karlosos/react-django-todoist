@@ -11,6 +11,9 @@ class Project(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=100)
 
+    def __str__(self):
+        return self.name
+
 
 class Task(models.Model):
     """
@@ -23,6 +26,9 @@ class Task(models.Model):
     task = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
 
     def __repr__(self):
         return 'Task \"' + self.task + '\" is added.'
