@@ -18,10 +18,10 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
 class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
-        fields = ['user', 'archived', 'project', 'task', 'created_at', 'updated_at']
+        fields = ['archived', 'project', 'task', 'created_at', 'updated_at']
 
 
 class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
-        fields = ['user', 'created', 'name']
+        fields = ['created', 'name']
