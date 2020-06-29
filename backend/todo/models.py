@@ -1,5 +1,4 @@
 from django.db import models
-from django.conf import settings
 
 
 class Project(models.Model):
@@ -27,6 +26,3 @@ class Task(models.Model):
 
     def __str__(self):
         return self.name
-
-    def __repr__(self):
-        return 'Task \"' + self.task + '\" is added.'

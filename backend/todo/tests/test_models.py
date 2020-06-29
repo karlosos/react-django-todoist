@@ -1,5 +1,5 @@
 from django.test import TestCase
-from ..models import Task
+from ..models import Task, Project
 
 
 class TaskTest(TestCase):
@@ -8,19 +8,22 @@ class TaskTest(TestCase):
     """
 
     def setUp(self):
+        project1 = Project.objects.create(
+            name="This is project"
+        )
+
         Task.objects.create(
             archived=False,
-            project='Sample project',
+            project=project1,
             task='This is my task'
         )
 
         Task.objects.create(
             archived=True,
-            project='Sample project',
+            project=None,
             task='Second task'
         )
 
     def test_task_archive(self):
         second_task = Task.objects.get(task='Second task')
         self.assertEqual(second_task.archived, True)
-        print('This is unit test')

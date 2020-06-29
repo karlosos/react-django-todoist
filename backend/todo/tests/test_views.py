@@ -1,182 +1,149 @@
 import json
 from rest_framework import status
-from django.test import TestCase, Client
-from django.urls import reverse
-from django.contrib.auth.model import User
+from rest_framework.test import APIClient
+from rest_framework.test import APITestCase
 from ..models import Task, Project
 from ..serializers import TaskSerializer, ProjectSerializer
 
 
 # initialize the APIClient app
-client = Client()
+client = APIClient()
 
 
-class GetAllTasksTest(TestCase):
-    """ Test module for GET all tasks API """
+class TaskViewSetTestCase(APITestCase):
+    """ Test tasks viewset """
 
     def setUp(self):
-        testuser1 = User.objects.create_user(
-            username='testuser1',
-            password='abc'
+        self.project1 = Project.objects.create(
+            name="This is project"
         )
-        testuser1.save()
-        Task.objects.create(
+
+        self.task1 = Task.objects.create(
             archived=False,
-            # project='Sample project',
+            project=self.project1,
             task='This is my task'
         )
 
-        Task.objects.create(
+        self.task2 = Task.objects.create(
             archived=True,
             # project='Sample project',
             task='Second task'
         )
 
-    def test_get_all_tasks(self):
+    def test_task_list(self):
         # get API response
-        response = client.get(reverse('get_post_tasks'))
+        response = client.get('/api/v1/tasks/')
         # get data from db
         tasks = Task.objects.all()
         serializer = TaskSerializer(tasks, many=True)
-        self.assertEqual(response.data, serializer.data)
+        tasks_len_from_response = len(json.loads(response.content)['results'])
+        tasks_len_from_object = len(serializer.data)
+        self.assertEqual(tasks_len_from_response, tasks_len_from_object)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
+    def test_task_create(self):
+        # Remember how many tasks existed before adding new task
+        tasks = Task.objects.all()
+        serializer = TaskSerializer(tasks, many=True)
+        tasks_len_before = len(serializer.data)
 
-class GetSingleTaskTest(TestCase):
-    """ Test module for GET single task API """
-
-    def setUp(self):
-        self.first = Task.objects.create(
-            archived=False,
-            # project='Sample project',
-            task='This is my task'
-        )
-
-        self.second = Task.objects.create(
-            archived=True,
-            # project='Sample project',
-            task='Second task'
-        )
-
-    def test_get_valid_single_task(self):
-        response = client.get(
-            reverse('get_delete_update_task', kwargs={'pk': self.first.pk}))
-        task = Task.objects.get(pk=self.first.pk)
-        serializer = TaskSerializer(task)
-        self.assertEqual(response.data, serializer.data)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-
-    def test_get_invalid_single_task(self):
-        response = client.get(
-            reverse('get_delete_update_task', kwargs={'pk': 30}))
-        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
-
-
-class CreateNewTaskTest(TestCase):
-    """ Test module for inserting a new task """
-
-    def setUp(self):
-        self.valid_payload = {
-            'archived': False,
-            # 'project': 'Sample project',
-            'task': 'This is my task'
-        }
-
-        self.invalid_payload = {
-            'archived': False,
-            # 'project': 'Sample project',
-            'task': ''
-        }
-
-    def test_create_valid_task(self):
-        response = client.post(
-            reverse('get_post_tasks'),
-            data=json.dumps(self.valid_payload),
-            content_type='application/json'
-        )
+        # Test creating task
+        data = {'task': 'This is new task'}
+        response = client.post('/api/v1/tasks/', data=data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
-    def test_create_invalid_task(self):
-        response = client.post(
-            reverse('get_post_tasks'),
-            data=json.dumps(self.invalid_payload),
-            content_type='application/json'
-        )
-        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        # Check if task has been added
+        tasks = Task.objects.all()
+        serializer = TaskSerializer(tasks, many=True)
+        tasks_len_after = len(serializer.data)
+        self.assertEqual(tasks_len_before + 1, tasks_len_after)
 
+    def test_task_retrieve(self):
+        response = client.get('/api/v1/tasks/1/')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        task_serializer_data = TaskSerializer(instance=self.task1).data
+        self.assertEqual(task_serializer_data, response.data)
 
-class UpdateSingleTaskTest(TestCase):
-    """ Test module for updating an existing task record """
+    def test_task_update(self):
+        name_before = self.task1.task
+        response = client.put('/api/v1/tasks/1/', {'task': 'new name'})
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        name_after = Task.objects.get(id=1).task
+        self.assertEqual(name_after, 'new name')
+        self.assertNotEqual(name_before, name_after)
 
-    def setUp(self):
-        self.first = Task.objects.create(
-            archived=False,
-            # project='Sample project',
-            task='This is my task'
-        )
+    def test_task_partial_update(self):
+        name_before = self.task2.task
+        response = client.patch('/api/v1/tasks/2/', {'task': 'new name'})
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        name_after = Task.objects.get(id=2).task
+        self.assertEqual(name_after, 'new name')
+        self.assertNotEqual(name_before, name_after)
 
-        self.second = Task.objects.create(
-            archived=True,
-            # project='Sample project',
-            task='Second task'
-        )
-
-        self.valid_payload = {
-            'archived': False,
-            # 'project': 'Sample project',
-            'task': 'This is my task'
-        }
-
-        self.invalid_payload = {
-            'archived': False,
-            # 'project': 'Sample project',
-            'task': ''
-        }
-
-    def test_valid_update_task(self):
-        response = client.put(
-            reverse('get_delete_update_task', kwargs={'pk': self.first.pk}),
-            data=json.dumps(self.valid_payload),
-            content_type='application/json'
-        )
+    def test_task_delete(self):
+        response = client.delete('/api/v1/tasks/1/')
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
-    def test_invalid_update_task(self):
-        response = client.put(
-            reverse('get_delete_update_task', kwargs={'pk': self.second.pk}),
-            data=json.dumps(self.invalid_payload),
-            content_type='application/json')
-        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
-
-class DeleteSingleTaskTest(TestCase):
-    """ Test module for deleting an existing task record """
+class ProjectViewSetTestCase(APITestCase):
+    """ Test project viewset """
 
     def setUp(self):
-        self.first = Task.objects.create(
-            archived=False,
-            # project='Sample project',
-            task='This is my task'
+        self.project1 = Project.objects.create(
+            name="This is project"
+        )
+        self.project2 = Project.objects.create(
+            name="This is another one"
         )
 
-        self.second = Task.objects.create(
-            archived=True,
-            # project='Sample project',
-            task='Second task'
-        )
+    def test_project_list(self):
+        response = client.get('/api/v1/projects/')
+        projects = Project.objects.all()
+        serializer = ProjectSerializer(projects, many=True)
+        projects_len_from_response = len(json.loads(response.content)['results'])
+        projects_len_from_object = len(serializer.data)
+        self.assertEqual(projects_len_from_response, projects_len_from_object)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_valid_delete_task(self):
-        response = client.delete(
-            reverse('get_delete_update_task', kwargs={'pk': self.first.pk}))
+    def test_project_create(self):
+        # Remember how many projects existed before adding new project
+        projects = Project.objects.all()
+        serializer = ProjectSerializer(projects, many=True)
+        projects_len_before = len(serializer.data)
+
+        # Test creating task
+        data = {'name': 'This is new project'}
+        response = client.post('/api/v1/projects/', data=data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+        # Check if task has been added
+        projects = Project.objects.all()
+        serializer = ProjectSerializer(projects, many=True)
+        projects_len_after = len(serializer.data)
+        self.assertEqual(projects_len_before + 1, projects_len_after)
+
+    def test_project_retrieve(self):
+        response = client.get('/api/v1/projects/1/')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        project_serializer_data = ProjectSerializer(instance=self.project1).data
+        self.assertEqual(project_serializer_data, response.data)
+
+    def test_project_update(self):
+        name_before = self.project1.name
+        response = client.put('/api/v1/projects/1/', {'name': 'new name'})
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        name_after = Project.objects.get(id=1).name
+        self.assertEqual(name_after, 'new name')
+        self.assertNotEqual(name_before, name_after)
+
+    def test_project_partial_update(self):
+        name_before = self.project1.name
+        response = client.patch('/api/v1/projects/1/', {'name': 'new name'})
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        name_after = Project.objects.get(id=1).name
+        self.assertEqual(name_after, 'new name')
+        self.assertNotEqual(name_before, name_after)
+
+    def test_project_delete(self):
+        response = client.delete('/api/v1/projects/1/')
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
-
-    def test_invalid_delete_puppy(self):
-        response = client.delete(
-            reverse('get_delete_update_task', kwargs={'pk': 30}))
-        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
-
-
-# TODO:
-# - refactor task
-# - Write test like here https://github.com/erdem/DRF-TDD-example/blob/master/todoapp/todos/tests.py
-# for Project

@@ -28,7 +28,8 @@ class Migration(migrations.Migration):
                 ('task', models.TextField()),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
-                ('project', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='todo.Project')),
+                ('project', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE,
+                                              to='todo.Project')),
             ],
         ),
     ]
