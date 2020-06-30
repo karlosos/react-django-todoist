@@ -21,6 +21,7 @@ class Task(models.Model):
     archived = models.BooleanField(default=False)
     project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True)
     task = models.TextField()
+    date = models.DateField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

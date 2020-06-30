@@ -1,12 +1,11 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from backend.todo.serializers import UserSerializer, GroupSerializer
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 
 from .models import Task, Project
 from .serializers import TaskSerializer, ProjectSerializer
-from .permissions import UserIsOwnerProject
+from datetime import date, timedelta
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -29,23 +28,24 @@ class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all().order_by('id')
     serializer_class = TaskSerializer
 
+    def list(self, request):
+        queryset = Task.objects.all()
+
+        tasks_filter = request.query_params.get('filter', None)
+        if tasks_filter is not None:
+            if tasks_filter == 'NEXT_7':
+                queryset = queryset.filter(date__range=[date.today() + timedelta(days=1),
+                                           date.today() + timedelta(days=7)])
+            elif tasks_filter == 'TODAY':
+                queryset = queryset.filter(date__exact=date.today())
+            else:
+                queryset = queryset.filter(project__exact=tasks_filter)
+                print(tasks_filter)
+
+        serializer = TaskSerializer(queryset, many=True)
+        return Response(serializer.data)
+
 
 class ProjectViewSet(viewsets.ModelViewSet):
     queryset = Project.objects.all().order_by('id')
     serializer_class = ProjectSerializer
-
-
-class ProjectListCreateAPIView(ListCreateAPIView):
-    serializer_class = ProjectSerializer
-
-    def get_queryset(self):
-        return Project.objects.filter(user=self.request.user)
-
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
-
-
-class ProjectDetailAPIView(RetrieveUpdateDestroyAPIView):
-    serializer_class = ProjectSerializer
-    queryset = Project.objects.all()
-    permission_classes = (IsAuthenticated, UserIsOwnerProject)

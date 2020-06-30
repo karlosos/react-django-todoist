@@ -4,6 +4,7 @@ from rest_framework.test import APIClient
 from rest_framework.test import APITestCase
 from ..models import Task, Project
 from ..serializers import TaskSerializer, ProjectSerializer
+from datetime import date, timedelta
 
 
 # initialize the APIClient app
@@ -26,8 +27,14 @@ class TaskViewSetTestCase(APITestCase):
 
         self.task2 = Task.objects.create(
             archived=True,
-            # project='Sample project',
+            date=date.today(),
             task='Second task'
+        )
+
+        self.task3 = Task.objects.create(
+            archived=True,
+            date=date.today() + timedelta(days=3),
+            task='Third task'
         )
 
     def test_task_list(self):
@@ -36,10 +43,46 @@ class TaskViewSetTestCase(APITestCase):
         # get data from db
         tasks = Task.objects.all()
         serializer = TaskSerializer(tasks, many=True)
-        tasks_len_from_response = len(json.loads(response.content)['results'])
+        tasks_len_from_response = len(response.data)
         tasks_len_from_object = len(serializer.data)
         self.assertEqual(tasks_len_from_response, tasks_len_from_object)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_task_list_next_7(self):
+        response = client.get('/api/v1/tasks/', data={'filter': 'NEXT_7'})
+        tasks_len_from_response = len(response.data)
+        self.assertEqual(tasks_len_from_response, 1)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        task_serializer_data = TaskSerializer(instance=self.task3).data
+        self.assertEqual(response.data[0], task_serializer_data)
+
+    def test_task_list_today(self):
+        response = client.get('/api/v1/tasks/', data={'filter': 'TODAY'})
+        tasks_len_from_response = len(response.data)
+        self.assertEqual(tasks_len_from_response, 1)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        task_serializer_data = TaskSerializer(instance=self.task2).data
+        self.assertEqual(response.data[0], task_serializer_data)
+
+    def test_task_list_project(self):
+        project_id = self.project1.id
+        response = client.get('/api/v1/tasks/', data={'filter': project_id})
+        tasks_len_from_response = len(response.data)
+        self.assertEqual(tasks_len_from_response, 1)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        task_serializer_data = TaskSerializer(instance=self.task1).data
+        self.assertEqual(response.data[0], task_serializer_data)
+
+    def test_task_list_project_without_tasks(self):
+        project2 = Project.objects.create(
+            name="This is project"
+        )
+        project_id = project2.id
+        response = client.get('/api/v1/tasks/', data={'filter': project_id})
+        tasks_len_from_response = len(response.data)
+        self.assertEqual(tasks_len_from_response, 0)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data, [])
 
     def test_task_create(self):
         # Remember how many tasks existed before adding new task
