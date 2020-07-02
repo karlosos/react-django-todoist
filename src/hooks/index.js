@@ -32,21 +32,15 @@ export const useProjects = () => {
   const [projects, setProjects] = useState([])
 
   useEffect(() => {
-    firebase
-      .firestore()
-      .collection('projects')
-      .where('userId', '==', 'jlIFXIwyAL3tzHMtzRbw')
-      .orderBy('projectId')
-      .get()
-      .then(snapshot => {
-        const allProjects = snapshot.docs.map(project => ({
-          ...project.data(),
-          docId: project.id
-        }))
-
-        if (JSON.stringify(allProjects) !== JSON.stringify(projects)) {
-          setProjects(allProjects)
-        }
+    axios.get('http://127.0.0.1:8000/api/v1/projects/')
+      .then(res => {
+        const resultProjects = res.data.results
+        if (JSON.stringify(resultProjects) !== JSON.stringify(projects)) { setProjects(resultProjects) }
+        console.log(resultProjects)
+      })
+      .catch(err => {
+        if (JSON.stringify([]) !== JSON.stringify(projects)) { setProjects([]) }
+        console.log(err)
       })
   }, [projects])
 
