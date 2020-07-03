@@ -6,7 +6,6 @@ import { useSelectedProjectValue } from '../context'
 import { ProjectOverlay } from './ProjectOverlay'
 import { TaskDate } from './TaskDate'
 import { TaskInput } from './TaskInput'
-import { useTasks } from '../hooks'
 import axios from 'axios'
 
 export const AddTask = ({
@@ -42,15 +41,17 @@ export const AddTask = ({
     }
 
     if (task) {
-      const formdata = new FormData()
-      formdata.append('archived', false)
-      formdata.append('task', task)
+      const taskData = {}
+      taskData.task = task
+      taskData.archived = false
       if (projectId) {
-        formdata.append('project', projectId)
+        taskData.project = projectId
       }
-      formdata.append('date', collatedDate || taskDate)
+      if (collatedDate || taskDate) {
+        taskData.date = collatedDate || taskDate
+      }
 
-      axios.post('http://127.0.0.1:8000/api/v1/tasks/', formdata)
+      axios.post('http://127.0.0.1:8000/api/v1/tasks/', taskData)
         .then(res => {
           setTask('')
           setProject('')

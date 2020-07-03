@@ -11,11 +11,11 @@ export const TaskDate = ({ setTaskDate, showTaskDate, setShowTaskDate }) =>
           <div
             onClick={() => {
               setShowTaskDate(false)
-              setTaskDate(moment().format('DD/MM/YYYY'))
+              setTaskDate(moment().format('YYYY-MM-DD'))
             }}
             onKeyDown={() => {
               setShowTaskDate(false)
-              setTaskDate(moment().format('DD/MM/YYYY'))
+              setTaskDate(moment().format('YYYY-MM-DD'))
             }}
             data-testid='task-date-today'
             tabIndex={0}
@@ -35,7 +35,7 @@ export const TaskDate = ({ setTaskDate, showTaskDate, setShowTaskDate }) =>
               setTaskDate(
                 moment()
                   .add(1, 'day')
-                  .format('DD/MM/YYYY')
+                  .format('YYYY-MM-DD')
               )
             }}
             onKeyDown={() => {
@@ -43,7 +43,7 @@ export const TaskDate = ({ setTaskDate, showTaskDate, setShowTaskDate }) =>
               setTaskDate(
                 moment()
                   .add(1, 'day')
-                  .format('DD/MM/YYYY')
+                  .format('YYYY-MM-DD')
               )
             }}
             data-testid='task-date-tomorrow'
@@ -64,7 +64,7 @@ export const TaskDate = ({ setTaskDate, showTaskDate, setShowTaskDate }) =>
               setTaskDate(
                 moment()
                   .add(7, 'days')
-                  .format('DD/MM/YYYY')
+                  .format('YYYY-MM-DD')
               )
             }}
             onKeyDown={() => {
@@ -72,7 +72,7 @@ export const TaskDate = ({ setTaskDate, showTaskDate, setShowTaskDate }) =>
               setTaskDate(
                 moment()
                   .add(7, 'days')
-                  .format('DD/MM/YYYY')
+                  .format('YYYY-MM-DD')
               )
             }}
             data-testid='task-date-next-week'
