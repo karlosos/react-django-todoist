@@ -1,11 +1,13 @@
-import { useState, useEffect } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import axios from 'axios'
 
 export const useTasks = selectedProject => {
   const [tasks, setTasks] = useState([])
   const [archivedTasks, setArchivedTasks] = useState([])
+  const [updateTasks, setUpdateTasks] = useState([])
+  const forceUpdateTasks = useCallback(() => setUpdateTasks({}), [])
 
-  const updateTasks = () => {
+  useEffect(() => {
     const requestParams = selectedProject && selectedProject !== 'INBOX'
       ? { filter: selectedProject } : {}
 
@@ -22,13 +24,9 @@ export const useTasks = selectedProject => {
         setArchivedTasks([])
         console.log(err)
       })
-  }
+  }, [selectedProject, updateTasks])
 
-  useEffect(() => {
-    updateTasks()
-  }, [selectedProject])
-
-  return { tasks, archivedTasks, updateTasks }
+  return { tasks, archivedTasks, forceUpdateTasks }
 }
 
 export const useProjects = () => {

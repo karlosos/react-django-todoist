@@ -9,7 +9,7 @@ import { useSelectedProjectValue, useProjectsValue } from '../context'
 export const Tasks = () => {
   const { selectedProject } = useSelectedProjectValue()
   const { projects } = useProjectsValue()
-  const { tasks } = useTasks(selectedProject)
+  const { tasks, forceUpdateTasks } = useTasks(selectedProject)
 
   let projectName = ''
 
@@ -38,7 +38,7 @@ export const Tasks = () => {
         ))}
       </ul>
 
-      <AddTask />
+      <AddTask forceUpdateTasks={forceUpdateTasks} />
     </div>
   )
 }

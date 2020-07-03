@@ -13,7 +13,8 @@ export const AddTask = ({
   showAddTaskMain = true,
   shouldShowMain = false,
   showQuickAddTask,
-  setShowQuickAddTask
+  setShowQuickAddTask,
+  forceUpdateTasks
 }) => {
   const [task, setTask] = useState('')
   const [taskDate, setTaskDate] = useState('')
@@ -23,7 +24,6 @@ export const AddTask = ({
   const [showTaskDate, setShowTaskDate] = useState(false)
 
   const { selectedProject } = useSelectedProjectValue()
-  const { updateTasks } = useTasks(selectedProject)
 
   const addTask = () => {
     let projectId = project || selectedProject
@@ -57,7 +57,7 @@ export const AddTask = ({
           setShowMain('')
           setShowProjectOverlay(false)
           console.log(res)
-          updateTasks()
+          forceUpdateTasks()
         })
         .catch(err => {
           setTask('')
