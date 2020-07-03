@@ -2,11 +2,12 @@ import React, { useState } from 'react'
 import { FaRegListAlt, FaRegCalendarAlt } from 'react-icons/fa'
 import moment from 'moment'
 import PropTypes from 'prop-types'
-import { firebase } from '../firebase'
 import { useSelectedProjectValue } from '../context'
 import { ProjectOverlay } from './ProjectOverlay'
 import { TaskDate } from './TaskDate'
 import { TaskInput } from './TaskInput'
+import { useTasks } from '../hooks'
+import axios from 'axios'
 
 export const AddTask = ({
   showAddTaskMain = true,
@@ -22,39 +23,50 @@ export const AddTask = ({
   const [showTaskDate, setShowTaskDate] = useState(false)
 
   const { selectedProject } = useSelectedProjectValue()
+  const { updateTasks } = useTasks(selectedProject)
 
   const addTask = () => {
-    const projectId = project || selectedProject
+    let projectId = project || selectedProject
     let collatedDate = ''
 
     if (projectId === 'TODAY') {
       collatedDate = moment().format('DD/MM/YYYY')
+      projectId = ''
     } else if (projectId === 'NEXT_7') {
       collatedDate = moment()
         .add(7, 'days')
         .format('DD/MM/YYYY')
+      projectId = ''
+    } else if (projectId === 'INBOX') {
+      projectId = ''
     }
 
-    return (
-      task &&
-      projectId &&
-      firebase
-        .firestore()
-        .collection('tasks')
-        .add({
-          archived: false,
-          projectId,
-          task,
-          date: collatedDate || taskDate,
-          userId: 'jlIFXIwyAL3tzHMtzRbw'
-        })
-        .then(() => {
+    if (task) {
+      const formdata = new FormData()
+      formdata.append('archived', false)
+      formdata.append('task', task)
+      if (projectId) {
+        formdata.append('project', projectId)
+      }
+      formdata.append('date', collatedDate || taskDate)
+
+      axios.post('http://127.0.0.1:8000/api/v1/tasks/', formdata)
+        .then(res => {
           setTask('')
           setProject('')
           setShowMain('')
           setShowProjectOverlay(false)
+          console.log(res)
+          updateTasks()
         })
-    )
+        .catch(err => {
+          setTask('')
+          setProject('')
+          setShowMain('')
+          setShowProjectOverlay(false)
+          console.log(err)
+        })
+    }
   }
 
   return (

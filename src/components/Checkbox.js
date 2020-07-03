@@ -29,6 +29,6 @@ export const Checkbox = ({ id, taskDesc }) => {
 }
 
 Checkbox.propTypes = {
-  id: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
   taskDesc: PropTypes.string.isRequired
 }

@@ -5,7 +5,7 @@ export const useTasks = selectedProject => {
   const [tasks, setTasks] = useState([])
   const [archivedTasks, setArchivedTasks] = useState([])
 
-  useEffect(() => {
+  const updateTasks = () => {
     const requestParams = selectedProject && selectedProject !== 'INBOX'
       ? { filter: selectedProject } : {}
 
@@ -22,9 +22,13 @@ export const useTasks = selectedProject => {
         setArchivedTasks([])
         console.log(err)
       })
+  }
+
+  useEffect(() => {
+    updateTasks()
   }, [selectedProject])
 
-  return { tasks, archivedTasks }
+  return { tasks, archivedTasks, updateTasks }
 }
 
 export const useProjects = () => {
