@@ -11,9 +11,7 @@ jest.mock('../context', () => ({
     projects: [
       {
         name: '🙌 THE OFFICE',
-        projectId: '1',
-        userId: 'jlIFXIwyAL3tzHMtzRbw',
-        docId: 'michael-scott'
+        id: '1'
       }
     ]
   }))

@@ -9,33 +9,23 @@ jest.mock('../context', () => ({
     projects: [
       {
         name: '🙌 THE OFFICE',
-        projectId: '1',
-        userId: 'jlIFXIwyAL3tzHMtzRbw',
-        docId: 'michael-scott'
+        id: '1'
       },
       {
         name: '🚀 DAILY',
-        projectId: '2',
-        userId: 'jlIFXIwyAL3tzHMtzRbw',
-        docId: 'daily-office'
+        id: '2'
       },
       {
         name: '🎯 FUTURE',
-        projectId: '3',
-        userId: 'jlIFXIwyAL3tzHMtzRbw',
-        docId: 'wake-up'
+        id: '3'
       },
       {
         name: '📚 WORDS',
-        projectId: '4',
-        userId: 'jlIFXIwyAL3tzHMtzRbw',
-        docId: 'arcade-fire'
+        id: '4'
       },
       {
         name: '🎵 MUSIC',
-        projectId: '5',
-        userId: 'jlIFXIwyAL3tzHMtzRbw',
-        docId: 'bella-ciao'
+        id: '5'
       }
     ]
   }))
@@ -50,8 +40,7 @@ jest.mock('../hooks', () => ({
         date: '21/07/2019',
         projectId: '1',
         task:
-          'Would I rather be feared or loved? Easy. Both. I want people to be afraid of how much they love me.',
-        userId: 'jlIFXIwyAL3tzHMtzRbw'
+          'Would I rather be feared or loved? Easy. Both. I want people to be afraid of how much they love me.'
       }
     ]
   })
