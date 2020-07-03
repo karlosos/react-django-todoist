@@ -30,12 +30,12 @@ export const AddTask = ({
     let collatedDate = ''
 
     if (projectId === 'TODAY') {
-      collatedDate = moment().format('DD/MM/YYYY')
+      collatedDate = moment().format('YYYY-MM-DD')
       projectId = ''
     } else if (projectId === 'NEXT_7') {
       collatedDate = moment()
         .add(7, 'days')
-        .format('DD/MM/YYYY')
+        .format('YYYY-MM-DD')
       projectId = ''
     } else if (projectId === 'INBOX') {
       projectId = ''
