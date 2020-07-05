@@ -2,6 +2,7 @@ import React from 'react'
 import { render, fireEvent, cleanup, wait } from '@testing-library/react'
 import { AddTask } from '../components/AddTask'
 import { useSelectedProjectValue } from '../context'
+import axios from 'axios'
 
 beforeEach(cleanup)
 
@@ -10,15 +11,17 @@ jest.mock('../context', () => ({
   useProjectsValue: jest.fn(() => ({ projects: [] }))
 }))
 
-jest.mock('../firebase', () => ({
-  firebase: {
-    firestore: jest.fn(() => ({
-      collection: jest.fn(() => ({
-        add: jest.fn(() => Promise.resolve('Never mock firebase'))
-      }))
-    }))
-  }
-}))
+jest.mock('axios')
+
+// jest.mock('../firebase', () => ({
+//   firebase: {
+//     firestore: jest.fn(() => ({
+//       collection: jest.fn(() => ({
+//         add: jest.fn(() => Promise.resolve('Never mock firebase'))
+//       }))
+//     }))
+//   }
+// }))
 
 describe('<AddTask />', () => {
   afterEach(() => {
@@ -152,6 +155,7 @@ describe('<AddTask />', () => {
       useSelectedProjectValue.mockImplementation(() => ({
         selectedProject: 'TODAY'
       }))
+      axios.post.mockImplementation((taskData) => Promise.resolve({}))
 
       const showQuickAddTask = true
       const setShowQuickAddTask = jest.fn(() => !showQuickAddTask)
@@ -179,6 +183,7 @@ describe('<AddTask />', () => {
       useSelectedProjectValue.mockImplementation(() => ({
         selectedProject: 'NEXT_7'
       }))
+      axios.post.mockImplementation((taskData) => Promise.resolve({}))
 
       const showQuickAddTask = true
       const setShowQuickAddTask = jest.fn(() => !showQuickAddTask)
@@ -206,6 +211,7 @@ describe('<AddTask />', () => {
       useSelectedProjectValue.mockImplementation(() => ({
         selectedProject: '1'
       }))
+      axios.post.mockImplementation((taskData) => Promise.resolve({}))
 
       const { queryByTestId } = render(<AddTask showMain />)
       fireEvent.click(queryByTestId('show-main-action'))
@@ -239,6 +245,7 @@ describe('<AddTask />', () => {
       useSelectedProjectValue.mockImplementation(() => ({
         selectedProject: '1'
       }))
+      axios.post.mockImplementation((taskData) => Promise.resolve({}))
 
       const { queryByTestId } = render(<AddTask showMain />)
       fireEvent.click(queryByTestId('show-main-action'))
@@ -272,6 +279,7 @@ describe('<AddTask />', () => {
       useSelectedProjectValue.mockImplementation(() => ({
         selectedProject: '1'
       }))
+      axios.post.mockImplementation((taskData) => Promise.resolve({}))
 
       const { queryByTestId } = render(<AddTask showMain />)
       fireEvent.click(queryByTestId('show-main-action'))
@@ -306,6 +314,7 @@ describe('<AddTask />', () => {
     useSelectedProjectValue.mockImplementation(() => ({
       selectedProject: 'TODAY'
     }))
+    axios.post.mockImplementation((taskData) => Promise.resolve({}))
 
     const showQuickAddTask = true
     const setShowQuickAddTask = jest.fn(() => !showQuickAddTask)

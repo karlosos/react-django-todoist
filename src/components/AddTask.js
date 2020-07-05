@@ -57,6 +57,7 @@ export const AddTask = ({
           setProject('')
           setShowMain('')
           setShowProjectOverlay(false)
+          setShowQuickAddTask(false)
           console.log(res)
           forceUpdateTasks()
         })
