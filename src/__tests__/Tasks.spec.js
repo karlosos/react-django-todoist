@@ -3,6 +3,17 @@ import { render, cleanup } from '@testing-library/react'
 import { Tasks } from '../components/Tasks'
 import { useSelectedProjectValue } from '../context'
 
+const tasks = [
+  {
+    id: 1,
+    archived: false,
+    date: '21/07/2019',
+    project: 1,
+    task:
+          'Would I rather be feared or loved? Easy. Both. I want people to be afraid of how much they love me.'
+  }
+]
+
 jest.mock('../context', () => ({
   useSelectedProjectValue: jest.fn(),
   useProjectsValue: jest.fn(() => ({
@@ -31,21 +42,6 @@ jest.mock('../context', () => ({
   }))
 }))
 
-jest.mock('../hooks', () => ({
-  useTasks: () => ({
-    tasks: [
-      {
-        id: 'mx2taaXpF38vYqMGbVtY',
-        archived: false,
-        date: '21/07/2019',
-        projectId: '1',
-        task:
-          'Would I rather be feared or loved? Easy. Both. I want people to be afraid of how much they love me.'
-      }
-    ]
-  })
-}))
-
 beforeEach(cleanup)
 
 describe('<Tasks />', () => {
@@ -56,7 +52,9 @@ describe('<Tasks />', () => {
   it('renders tasks', () => {
     useSelectedProjectValue.mockImplementation(() => ({
       setSelectedProject: jest.fn(() => 'INBOX'),
-      selectedProject: 'INBOX'
+      selectedProject: 'INBOX',
+      tasks: tasks,
+      forceUpdateTasks: jest.fn()
     }))
 
     const { queryByTestId } = render(<Tasks />)
@@ -67,7 +65,9 @@ describe('<Tasks />', () => {
   it('renders a task with a project title', () => {
     useSelectedProjectValue.mockImplementation(() => ({
       setSelectedProject: jest.fn(() => '1'),
-      selectedProject: '1'
+      selectedProject: '1',
+      tasks: tasks,
+      forceUpdateTasks: jest.fn()
     }))
 
     const { queryByTestId } = render(<Tasks />)
@@ -78,7 +78,9 @@ describe('<Tasks />', () => {
   it('renders a task with a collated title', () => {
     useSelectedProjectValue.mockImplementation(() => ({
       setSelectedProject: jest.fn(() => 'INBOX'),
-      selectedProject: 'INBOX'
+      selectedProject: 'INBOX',
+      tasks: tasks,
+      forceUpdateTasks: jest.fn()
     }))
 
     const { queryByTestId } = render(<Tasks />)

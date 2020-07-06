@@ -60,7 +60,6 @@ export const AddTask = ({
           setShowProjectOverlay(false)
           setShowTaskDate(false)
           setShowQuickAddTask(false)
-          console.log(res)
         })
         .catch(err => {
           setTask('')

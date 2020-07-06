@@ -7,7 +7,11 @@ import axios from 'axios'
 beforeEach(cleanup)
 
 jest.mock('../context', () => ({
-  useSelectedProjectValue: jest.fn(() => ({ selectedProject: '1' })),
+  useSelectedProjectValue: jest.fn(() => ({
+    selectedProject: '1',
+    tasks: [],
+    forceUpdateTasks: jest.fn()
+  })),
   useProjectsValue: jest.fn(() => ({ projects: [] }))
 }))
 
@@ -36,6 +40,7 @@ describe('<AddTask />', () => {
 
     it('renders the <AddTask /> quick overlay', () => {
       const setShowQuickAddTask = jest.fn()
+      const forceUpdateTasks = jest.fn()
 
       const { queryByTestId } = render(
         <AddTask
@@ -43,6 +48,7 @@ describe('<AddTask />', () => {
           shouldShowMain={false}
           showQuickAddTask
           setShowQuickAddTask={setShowQuickAddTask}
+          forceUpdateTasks={forceUpdateTasks}
         />
       )
 
@@ -159,10 +165,12 @@ describe('<AddTask />', () => {
 
       const showQuickAddTask = true
       const setShowQuickAddTask = jest.fn(() => !showQuickAddTask)
+      const forceUpdateTasks = jest.fn()
       const { queryByTestId } = render(
         <AddTask
           showQuickAddTask={showQuickAddTask}
           setShowQuickAddTask={setShowQuickAddTask}
+          forceUpdateTasks={forceUpdateTasks}
         />
       )
       fireEvent.click(queryByTestId('show-main-action'))
@@ -187,10 +195,12 @@ describe('<AddTask />', () => {
 
       const showQuickAddTask = true
       const setShowQuickAddTask = jest.fn(() => !showQuickAddTask)
+      const forceUpdateTasks = jest.fn()
       const { queryByTestId } = render(
         <AddTask
           showQuickAddTask={showQuickAddTask}
           setShowQuickAddTask={setShowQuickAddTask}
+          forceUpdateTasks={forceUpdateTasks}
         />
       )
       fireEvent.click(queryByTestId('show-main-action'))
@@ -213,7 +223,16 @@ describe('<AddTask />', () => {
       }))
       axios.post.mockImplementation((taskData) => Promise.resolve({}))
 
-      const { queryByTestId } = render(<AddTask showMain />)
+      const showQuickAddTask = true
+      const setShowQuickAddTask = jest.fn(() => !showQuickAddTask)
+      const forceUpdateTasks = jest.fn()
+      const { queryByTestId } = render(
+        <AddTask
+          showQuickAddTask={showQuickAddTask}
+          setShowQuickAddTask={setShowQuickAddTask}
+          forceUpdateTasks={forceUpdateTasks}
+        />
+      )
       fireEvent.click(queryByTestId('show-main-action'))
       expect(queryByTestId('add-task-content')).toBeTruthy()
       expect(queryByTestId('add-task-main')).toBeTruthy()
@@ -247,7 +266,16 @@ describe('<AddTask />', () => {
       }))
       axios.post.mockImplementation((taskData) => Promise.resolve({}))
 
-      const { queryByTestId } = render(<AddTask showMain />)
+      const showQuickAddTask = true
+      const setShowQuickAddTask = jest.fn(() => !showQuickAddTask)
+      const forceUpdateTasks = jest.fn()
+      const { queryByTestId } = render(
+        <AddTask
+          showQuickAddTask={showQuickAddTask}
+          setShowQuickAddTask={setShowQuickAddTask}
+          forceUpdateTasks={forceUpdateTasks}
+        />
+      )
       fireEvent.click(queryByTestId('show-main-action'))
       expect(queryByTestId('add-task-content')).toBeTruthy()
       expect(queryByTestId('add-task-main')).toBeTruthy()
@@ -281,7 +309,18 @@ describe('<AddTask />', () => {
       }))
       axios.post.mockImplementation((taskData) => Promise.resolve({}))
 
-      const { queryByTestId } = render(<AddTask showMain />)
+      const showQuickAddTask = true
+      const setShowQuickAddTask = jest.fn(() => !showQuickAddTask)
+      const forceUpdateTasks = jest.fn()
+      const { queryByTestId } = render(
+        <AddTask
+          showQuickAddTask={showQuickAddTask}
+          setShowQuickAddTask={setShowQuickAddTask}
+          forceUpdateTasks={forceUpdateTasks}
+        />
+      )
+      // const forceUpdateTasks = jest.fn()
+      // const { queryByTestId } = render(<AddTask showMain forceUpdateTasks={forceUpdateTasks} />)
       fireEvent.click(queryByTestId('show-main-action'))
       expect(queryByTestId('add-task-content')).toBeTruthy()
       expect(queryByTestId('add-task-main')).toBeTruthy()
@@ -318,10 +357,12 @@ describe('<AddTask />', () => {
 
     const showQuickAddTask = true
     const setShowQuickAddTask = jest.fn(() => !showQuickAddTask)
+    const forceUpdateTasks = jest.fn()
     const { queryByTestId } = render(
       <AddTask
         showQuickAddTask={showQuickAddTask}
         setShowQuickAddTask={setShowQuickAddTask}
+        forceUpdateTasks={forceUpdateTasks}
       />
     )
     fireEvent.click(queryByTestId('show-main-action'))
