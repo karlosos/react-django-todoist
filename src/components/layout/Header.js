@@ -2,10 +2,12 @@ import React, { useState } from 'react'
 import { FaRegSun, FaMoon } from 'react-icons/fa'
 import PropTypes from 'prop-types'
 import { AddTask } from '../AddTask'
+import { useSelectedProjectValue } from '../../context'
 
 export const Header = ({ darkMode, setDarkMode }) => {
   const [shouldShowMain, setShouldShowMain] = useState(false)
   const [showQuickAddTask, setShowQuickAddTask] = useState(false)
+  const { forceUpdateTasks } = useSelectedProjectValue()
 
   return (
     <header className='header' data-testid='header'>
@@ -52,6 +54,7 @@ export const Header = ({ darkMode, setDarkMode }) => {
         shouldShowMain={shouldShowMain}
         showQuickAddTask={showQuickAddTask}
         setShowQuickAddTask={setShowQuickAddTask}
+        forceUpdateTasks={forceUpdateTasks}
       />
     </header>
   )

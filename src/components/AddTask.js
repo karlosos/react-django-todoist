@@ -53,19 +53,21 @@ export const AddTask = ({
 
       axios.post('http://127.0.0.1:8000/api/v1/tasks/', taskData)
         .then(res => {
+          forceUpdateTasks()
           setTask('')
           setProject('')
           setShowMain('')
           setShowProjectOverlay(false)
+          setShowTaskDate(false)
           setShowQuickAddTask(false)
           console.log(res)
-          forceUpdateTasks()
         })
         .catch(err => {
           setTask('')
           setProject('')
           setShowMain('')
           setShowProjectOverlay(false)
+          setShowTaskDate(false)
           console.log(err)
         })
     }
