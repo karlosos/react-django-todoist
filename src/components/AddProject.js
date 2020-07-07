@@ -1,30 +1,24 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { firebase } from '../firebase'
-import { generatePushId } from '../helpers'
 import { useProjectsValue } from '../context'
+import axios from 'axios'
 
 export const AddProject = ({ shouldShow = false }) => {
   const [show, setShow] = useState(shouldShow)
   const [projectName, setProjectName] = useState('')
 
-  const projectId = generatePushId()
   const { projects, setProjects } = useProjectsValue()
 
   const addProject = () =>
     projectName &&
-    firebase
-      .firestore()
-      .collection('projects')
-      .add({
-        projectId,
-        name: projectName,
-        userId: 'jlIFXIwyAL3tzHMtzRbw'
-      })
-      .then(() => {
+    axios.post('http://127.0.0.1:8000/api/v1/projects/', { name: projectName })
+      .then(res => {
         setProjects([...projects])
         setProjectName('')
         setShow(false)
+      })
+      .catch(err => {
+        console.log(err)
       })
 
   return (
