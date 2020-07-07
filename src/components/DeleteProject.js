@@ -7,7 +7,7 @@ export const DeleteProject = (props) => {
         <p>Are you sure you want to delete this project?</p>
         <button
           type='button'
-          onClick={() => props.deleteProject(props.project.docId)}
+          onClick={() => props.deleteProject(props.project.id)}
         >
               Delete
         </button>

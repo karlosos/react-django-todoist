@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { useProjectsValue, useSelectedProjectValue } from '../context'
 import { firebase } from '../firebase'
 import { DeleteProject } from './DeleteProject'
+import axios from 'axios'
 
 export const IndividualProject = ({ project, active }) => {
   const [showConfirm, setShowConfirm] = useState(false)
@@ -14,15 +15,14 @@ export const IndividualProject = ({ project, active }) => {
     setShowConfirm(showConfirm && active)
   })
 
-  const deleteProject = docId => {
-    firebase
-      .firestore()
-      .collection('projects')
-      .doc(docId)
-      .delete()
-      .then(() => {
+  const deleteProject = id => {
+    axios.delete('http://127.0.0.1:8000/api/v1/projects/' + id + '/')
+      .then(res => {
         setProjects([...projects])
         setSelectedProject('INBOX')
+      })
+      .catch(err => {
+        console.log(err)
       })
   }
 
