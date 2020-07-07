@@ -1,15 +1,22 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { firebase } from '../firebase'
+import axios from 'axios'
+import { useSelectedProjectValue } from '../context'
 
 export const Checkbox = ({ id, taskDesc }) => {
+  const { forceUpdateTasks } = useSelectedProjectValue()
+
   const archiveTask = () => {
-    firebase
-      .firestore()
-      .collection('tasks')
-      .doc(id)
-      .update({
-        archived: true
+    const taskData = {
+      archived: true
+    }
+
+    axios.patch('http://127.0.0.1:8000/api/v1/tasks/' + id + '/', taskData)
+      .then(res => {
+        forceUpdateTasks()
+      })
+      .catch(err => {
+        console.log(err)
       })
   }
 
