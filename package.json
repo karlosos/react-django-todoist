@@ -19,7 +19,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "standard && react-scripts test --watchAll",
+    "test-lint": "standard && react-scripts test --watchAll",
+    "test": "react-scripts test",
     "test-coverage": "standard && react-scripts test --coverage --watchAll",
     "eject": "react-scripts eject"
   },

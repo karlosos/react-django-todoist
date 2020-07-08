@@ -1,23 +1,12 @@
 import React from 'react'
 import { render, fireEvent, cleanup } from '@testing-library/react'
 import { IndividualProject } from '../components/IndividualProject'
+import axios from 'axios'
 
 beforeEach(cleanup) // thanks!
 
-jest.mock('../firebase', () => ({
-  firebase: {
-    firestore: jest.fn(() => ({
-      collection: jest.fn(() => ({
-        doc: jest.fn(() => ({
-          delete: jest.fn(() =>
-            Promise.resolve('Never mock firebase, but I did!')
-          ),
-          update: jest.fn()
-        }))
-      }))
-    }))
-  }
-}))
+jest.mock('axios')
+axios.delete.mockImplementation(() => Promise.resolve({}))
 
 jest.mock('../context', () => ({
   useSelectedProjectValue: jest.fn(() => ({

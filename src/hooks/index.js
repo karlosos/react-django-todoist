@@ -37,7 +37,6 @@ export const useProjects = () => {
       .then(res => {
         const resultProjects = res.data.results
         if (JSON.stringify(resultProjects) !== JSON.stringify(projects)) { setProjects(resultProjects) }
-        console.log(resultProjects)
       })
       .catch(err => {
         if (JSON.stringify([]) !== JSON.stringify(projects)) { setProjects([]) }

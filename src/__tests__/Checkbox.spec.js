@@ -1,19 +1,16 @@
 import React from 'react'
 import { render, cleanup, fireEvent } from '@testing-library/react'
 import { Checkbox } from '../components/Checkbox'
+import axios from 'axios'
 
 beforeEach(cleanup) // clean the DOM!
 
-jest.mock('../firebase', () => ({
-  firebase: {
-    firestore: jest.fn(() => ({
-      collection: jest.fn(() => ({
-        doc: jest.fn(() => ({
-          update: jest.fn()
-        }))
-      }))
-    }))
-  }
+jest.mock('axios')
+
+jest.mock('../context', () => ({
+  useSelectedProjectValue: jest.fn(() => ({
+    forceUpdateTasks: jest.fn()
+  }))
 }))
 
 describe('<Checkbox />', () => {
@@ -26,6 +23,8 @@ describe('<Checkbox />', () => {
     })
 
     it('renders the task checkbox and accepts a onClick', () => {
+      axios.patch.mockImplementation((taskData) => Promise.resolve({}))
+      axios.get.mockImplementation(() => Promise.resolve({}))
       const { queryByTestId } = render(
         <Checkbox id={1} taskDesc='Finish this tutorial series!' />
       )
@@ -34,6 +33,8 @@ describe('<Checkbox />', () => {
     })
 
     it('renders the task checkbox and accepts a onKeyDown', () => {
+      axios.patch.mockImplementation((taskData) => Promise.resolve({}))
+      axios.get.mockImplementation(() => Promise.resolve({}))
       const { queryByTestId } = render(
         <Checkbox id={1} taskDesc='Finish this tutorial series!' />
       )

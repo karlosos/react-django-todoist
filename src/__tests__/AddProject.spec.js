@@ -1,6 +1,10 @@
 import React from 'react'
 import { render, cleanup, fireEvent, wait } from '@testing-library/react'
 import { AddProject } from '../components/AddProject'
+import axios from 'axios'
+
+jest.mock('axios')
+axios.post.mockImplementation((projectData) => Promise.resolve({}))
 
 jest.mock('../context', () => ({
   useSelectedProjectValue: jest.fn(),
@@ -39,16 +43,6 @@ jest.mock('../context', () => ({
     ],
     setProjects: jest.fn()
   }))
-}))
-
-jest.mock('../firebase', () => ({
-  firebase: {
-    firestore: jest.fn(() => ({
-      collection: jest.fn(() => ({
-        add: jest.fn(() => Promise.resolve('I am resolved!'))
-      }))
-    }))
-  }
 }))
 
 beforeEach(cleanup)

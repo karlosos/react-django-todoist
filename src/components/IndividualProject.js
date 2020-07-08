@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { FaTrashAlt } from 'react-icons/fa'
 import PropTypes from 'prop-types'
 import { useProjectsValue, useSelectedProjectValue } from '../context'
-import { firebase } from '../firebase'
 import { DeleteProject } from './DeleteProject'
 import axios from 'axios'
 
