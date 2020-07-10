@@ -93,3 +93,24 @@ python manage.py runserver
 python manage.py test
 ```
 
+### Deploy 🚀
+
+Create **heroku** application. 
+
+```
+$ heroku create drt-boilerplate
+```
+
+Add `nodejs` and `python` buildpacks and the `postgresql` addon to app:
+
+```
+$ heroku buildpacks:add --index 1 heroku/nodejs
+$ heroku buildpacks:add --index 2 heroku/python
+$ heroku addons:create heroku-postgresql:hobby-dev
+```
+
+Push repository to **heroku**:
+
+```
+$ git push heroku master
+```
