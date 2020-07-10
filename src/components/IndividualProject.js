@@ -12,7 +12,7 @@ export const IndividualProject = ({ project, active }) => {
 
   useEffect(() => {
     setShowConfirm(showConfirm && active)
-  })
+  }, [showConfirm, active])
 
   const deleteProject = id => {
     axios.delete('/api/v1/projects/' + id + '/')
