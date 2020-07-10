@@ -5,6 +5,8 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework import permissions
 
+from .views import index
+
 schema_view = get_schema_view(
    openapi.Info(
       title="TodoApp",
@@ -21,6 +23,7 @@ schema_view = get_schema_view(
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
+    path('', index, name='index'),
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('api/v1/', include('backend.todo.urls')),
