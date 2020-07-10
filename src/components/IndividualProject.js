@@ -15,7 +15,7 @@ export const IndividualProject = ({ project, active }) => {
   })
 
   const deleteProject = id => {
-    axios.delete('http://127.0.0.1:8000/api/v1/projects/' + id + '/')
+    axios.delete('/api/v1/projects/' + id + '/')
       .then(res => {
         setProjects([...projects])
         setSelectedProject('INBOX')

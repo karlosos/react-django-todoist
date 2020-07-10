@@ -11,7 +11,7 @@ export const Checkbox = ({ id, taskDesc }) => {
       archived: true
     }
 
-    axios.patch('http://127.0.0.1:8000/api/v1/tasks/' + id + '/', taskData)
+    axios.patch('/api/v1/tasks/' + id + '/', taskData)
       .then(res => {
         forceUpdateTasks()
       })

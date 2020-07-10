@@ -11,7 +11,7 @@ export const AddProject = ({ shouldShow = false }) => {
 
   const addProject = () =>
     projectName &&
-    axios.post('http://127.0.0.1:8000/api/v1/projects/', { name: projectName })
+    axios.post('/api/v1/projects/', { name: projectName })
       .then(res => {
         setProjects([...projects])
         setProjectName('')

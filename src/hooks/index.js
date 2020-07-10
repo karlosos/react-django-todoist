@@ -11,7 +11,7 @@ export const useTasks = selectedProject => {
     const requestParams = selectedProject && selectedProject !== 'INBOX'
       ? { filter: selectedProject } : {}
 
-    axios.get('http://127.0.0.1:8000/api/v1/tasks/', {
+    axios.get('/api/v1/tasks/', {
       params: requestParams
     })
       .then(res => {
@@ -33,7 +33,7 @@ export const useProjects = () => {
   const [projects, setProjects] = useState([])
 
   useEffect(() => {
-    axios.get('http://127.0.0.1:8000/api/v1/projects/')
+    axios.get('/api/v1/projects/')
       .then(res => {
         const resultProjects = res.data.results
         if (JSON.stringify(resultProjects) !== JSON.stringify(projects)) { setProjects(resultProjects) }

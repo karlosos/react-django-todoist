@@ -8,9 +8,9 @@ jest.mock('axios')
 
 axios.get.mockImplementation((url) => {
   switch (url) {
-    case 'http://127.0.0.1:8000/api/v1/tasks/':
+    case '/api/v1/tasks/':
       return Promise.resolve({ data: [] })
-    case 'http://127.0.0.1:8000/api/v1/projects/':
+    case '/api/v1/projects/':
       return Promise.resolve({
         data: {
           results: [
