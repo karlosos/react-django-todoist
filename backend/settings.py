@@ -144,8 +144,9 @@ REST_FRAMEWORK = {
 #     "http://127.0.0.1:8000"
 # ]
 
-# Configure app for Heroku deployment
-django_heroku.settings(locals())
+if 'HEROKU' in os.environ:
+    # Configure app for Heroku deployment
+    django_heroku.settings(locals())
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/

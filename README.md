@@ -98,7 +98,7 @@ python manage.py test
 Create **heroku** application. 
 
 ```
-$ heroku create drt-boilerplate
+$ heroku create todo-react-drf 
 ```
 
 Add `nodejs` and `python` buildpacks and the `postgresql` addon to app:
@@ -107,6 +107,12 @@ Add `nodejs` and `python` buildpacks and the `postgresql` addon to app:
 $ heroku buildpacks:add --index 1 heroku/nodejs
 $ heroku buildpacks:add --index 2 heroku/python
 $ heroku addons:create heroku-postgresql:hobby-dev
+```
+
+Set variable:
+
+```
+heroku config:set HEROKU=yes -a todo-react-drf
 ```
 
 Push repository to **heroku**:
