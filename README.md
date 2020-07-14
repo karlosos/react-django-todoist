@@ -20,6 +20,7 @@ I've learnt a lot from this project. Some concepts that I've grasped:
 - Django Rest Framework
 - Unit testing Django
 - Swagger documentation
+- Github Actions (CI)
 
 ## Features
 
