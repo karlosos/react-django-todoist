@@ -1,9 +1,9 @@
 
-<h1 align="center">A simplified todoist clone built with React and Firebase</h1>
+<h1 align="center">A simplified todoist clone built with React and Django</h1>
 
 <div align="center">Auto formatted with standardjs, tested with jest 🎗</div>
 
-![Tech logos](https://i.imgur.com/4OxMFz0.png)
+![Tech logos](https://i.imgur.com/s457QRL.png)
 
 ![App screenshot](https://i.imgur.com/OctvesO.png)
 
@@ -16,18 +16,32 @@ I've learnt a lot from this project. Some concepts that I've grasped:
 - React with hooks
 - Javascript fundamentals
 - Firebase
-- Unit testing with jest
+- Javascript unit testing with jest
+- Django Rest Framework
+- Unit testing Django
+- Swagger documentation
 
 ## Features
 
 - Adding and removing tasks
 - Tasks categories (projects)
-- Dark mode 
+- Dark mode
+- Backend REST API endpoints (`/api/v1/`)
+- Documentation of endpoints in swagger (`/documentation/`)
 
 ## Setting up development environment 🛠
 
-- `git clone https://github.com/oldboyxx/jira_clone.git`
-- Create an empty `.env` file in root folder, copy `.env.example` contents into it, and fill in your firebase api keys.
+### Backend
+- `git clone https://github.com/karlosos/react-todoist/`
+- `virtualenv .venv`
+- `.venv\Scripts\activate` or `source .venv/bin/activate`
+- `pip install -r requirements.txt`
+- `python manage.py migrate`
+- `python manage.py createsuperuser --email admin@example.com --username admin`
+- `python manage.py runserver`
+- Open [http://127.0.0.1:8000/api/v1/](http://127.0.0.1:8000/api/v1/) or [http://127.0.0.1:8000/swagger/](http://127.0.0.1:8000/swagger/) to view documentation.
+
+### Frontend
 - `npm run install`
 - `npm start`
 - Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
@@ -35,63 +49,15 @@ I've learnt a lot from this project. Some concepts that I've grasped:
 The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
 
-> Currently there's only one user with id: `jlIFXIwyAL3tzHMtzRbw`.
 
 ## Testing 🚥
 
-Run tests with: ```npm test -- --coverage```
+Run frontend tests with: ```npm test -- --coverage```
 
 HTML output will be available in `./coverage` folder.
 
-## Backend 👷
+Run backend tests with: ```python manage.py test```
 
-1. Create virtual environment with:
-
-```
-virtualenv .venv
-```
-
-2. Then activate it
-
-```
-.venv\Scripts\activate
-```
-
-or 
-
-```
-source .venv/bin/activate
-```
-
-3. Install dependencies:
-
-```
-pip install -r requirements
-```
-
-4. Create database with:
-
-```
-python manage.py migrate
-```
-
-5. Create super user:
-
-```
-python manage.py createsuperuser --email admin@example.com --username admin
-```
-
-6. Run server:
-
-```
-python manage.py runserver
-```
-
-7. Run tests:
-
-```
-python manage.py test
-```
 
 ### Deploy 🚀
 
