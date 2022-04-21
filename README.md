@@ -9,18 +9,19 @@
 
 ## What is this and who is it for 🤷‍♀️
 
-This was my first project in React that I've built in my spare time. It's meant to be showcase
-of my programming skills. 
+This was my first project in React that I've built in my spare time. React app is based on [tutorial](https://www.youtube.com/watch?v=hT3j87FMR6M). Backend was created by me without any help or tutorial. Github Actions (CI) were also done by me alone. 
+
+> ⚠️ Do not analyse React code as it was not written by me. This was one of the first tutorial projects I did for learning React. I made it public only for archiving reasons and because there are some additional things built over the tutorial base.
 
 I've learnt a lot from this project. Some concepts that I've grasped:
-- React with hooks
-- Javascript fundamentals
-- Firebase
-- Javascript unit testing with jest
-- Django Rest Framework
-- Unit testing Django
-- Swagger documentation
-- Github Actions (CI)
+- React with hooks (tutorial scope)
+- Javascript fundamentals (tutorial scope)
+- Firebase (tutorial scope)
+- Javascript unit testing with jest (tutorial scope)
+- Django Rest Framework ✅
+- Unit testing Django ✅
+- Swagger documentation ✅
+- Github Actions (CI) ✅
 
 ## Features
 
