@@ -88,3 +88,26 @@ Push repository to **heroku**:
 ```
 $ git push heroku master
 ```
+
+### Changelog 🗒️
+
+**v0.1 | 11.03.2020 | 30e7d5dfe070f13ba3b3d097a4addc63b6070189**
+
+- created initial project with React + Firebase
+
+**v0.2 | 14.07.2020 | c51909f7163ee16f1c52319b52abf21564291854**
+
+- replaced Firebase with custom backend written with Django Rest Framework
+- added Github CI
+
+**v0.2 | 21.03.2023**
+
+- upgraded frontend versions
+    - from React 16.12 to React 18.2.0
+- support from Node v12 to Node v18
+- cleanup `package.json` with proper 'devDependencies'
+
+- [ ] fix tests
+- [ ] update ci
+- [ ] move backend and frontend to separate directories
+- [ ] msw mocks
