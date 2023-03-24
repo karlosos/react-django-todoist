@@ -110,8 +110,8 @@ $ git push heroku master
 - cleanup `package.json` with proper 'devDependencies'
 
 - [x] fix tests
-- [ ] update ci
-- [ ] move backend and frontend to separate directories
+- [x] update ci
+- [x] move backend and frontend to separate directories
 - [ ] msw mocks
 - [ ] write down supported versions (update README)
 - [ ] review tests. make them modern (without much mocking)
