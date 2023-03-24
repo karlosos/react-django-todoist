@@ -10,10 +10,15 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+
     strategy:
-      max-parallel: 4
+      max-parallel: 1
       matrix:
-        python-version: [3.7, 3.8]
+        python-version: [3.9]
+  
+    defaults:
+      run:
+        working-directory: ./backend
 
     steps:
     - uses: actions/checkout@v2
@@ -30,5 +35,4 @@ jobs:
         python manage.py test
     - name: Run flake8
       run: |
-        python manage.py test
-        flake8 backend/
+        flake8 .

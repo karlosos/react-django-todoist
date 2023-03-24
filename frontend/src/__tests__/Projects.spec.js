@@ -5,17 +5,17 @@ import { Projects } from '../components/Projects'
 beforeEach(cleanup) // thanks!
 
 jest.mock('../context', () => ({
-  useSelectedProjectValue: jest.fn(() => ({
-    setSelectedProject: jest.fn(() => 'INBOX')
-  })),
-  useProjectsValue: jest.fn(() => ({
+  useSelectedProjectValue: () => ({
+    setSelectedProject: () => 'INBOX',
+  }),
+  useProjectsValue: () => ({
     projects: [
       {
         name: '🙌 THE OFFICE',
-        id: '1'
-      }
-    ]
-  }))
+        id: '1',
+      },
+    ],
+  }),
 }))
 
 describe('<ProjectOverlay', () => {
@@ -32,7 +32,9 @@ describe('<ProjectOverlay', () => {
     it('renders the projects and selects an active project using onClick', () => {
       const active = '1'
       const setActive = jest.fn()
-      const { queryByTestId } = render(<Projects active={active} setActive={setActive} />)
+      const { queryByTestId } = render(
+        <Projects active={active} setActive={setActive} />
+      )
       expect(queryByTestId('project-action')).toBeTruthy()
 
       fireEvent.click(queryByTestId('project-action'))
@@ -44,7 +46,9 @@ describe('<ProjectOverlay', () => {
     it('renders the projects and selects an active project using onKeyDown', () => {
       const active = '1'
       const setActive = jest.fn()
-      const { queryByTestId } = render(<Projects active={active} setActive={setActive} />)
+      const { queryByTestId } = render(
+        <Projects active={active} setActive={setActive} />
+      )
       expect(queryByTestId('project-action')).toBeTruthy()
 
       fireEvent.keyDown(queryByTestId('project-action'))
@@ -56,7 +60,9 @@ describe('<ProjectOverlay', () => {
     it('renders the projects with no active value', () => {
       const active = 'inbox'
       const setActive = jest.fn()
-      const { queryByTestId } = render(<Projects active={active} setActive={setActive} />)
+      const { queryByTestId } = render(
+        <Projects active={active} setActive={setActive} />
+      )
       expect(queryByTestId('project-action')).toBeTruthy()
 
       fireEvent.keyDown(queryByTestId('project-action'))

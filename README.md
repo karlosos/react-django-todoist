@@ -35,6 +35,7 @@ I've learnt a lot from this project. Some concepts that I've grasped:
 
 ### Backend
 - `git clone https://github.com/karlosos/react-todoist/`
+- `cd react-todoist/backend`
 - `virtualenv .venv`
 - `.venv\Scripts\activate` or `source .venv/bin/activate`
 - `pip install -r requirements.txt`
@@ -44,6 +45,7 @@ I've learnt a lot from this project. Some concepts that I've grasped:
 - Open [http://127.0.0.1:8000/api/v1/](http://127.0.0.1:8000/api/v1/) or [http://127.0.0.1:8000/swagger/](http://127.0.0.1:8000/swagger/) to view documentation.
 
 ### Frontend
+- `cd react-todoist/frontend`
 - `npm run install`
 - `npm start`
 - Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
@@ -88,3 +90,28 @@ Push repository to **heroku**:
 ```
 $ git push heroku master
 ```
+
+### Changelog 🗒️
+
+**v0.1 | 11.03.2020 | 30e7d5dfe070f13ba3b3d097a4addc63b6070189**
+
+- created initial project with React + Firebase
+
+**v0.2 | 14.07.2020 | c51909f7163ee16f1c52319b52abf21564291854**
+
+- replaced Firebase with custom backend written with Django Rest Framework
+- added Github CI
+
+**v0.2 | 21.03.2023**
+
+- upgraded frontend versions
+    - from React 16.12 to React 18.2.0
+- support from Node v12 to Node v18
+- cleanup `package.json` with proper 'devDependencies'
+
+- [x] fix tests
+- [x] update ci
+- [x] move backend and frontend to separate directories
+- [ ] msw mocks
+- [ ] write down supported versions (update README)
+- [ ] review tests. make them modern (without much mocking)

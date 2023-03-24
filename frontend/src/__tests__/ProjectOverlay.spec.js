@@ -6,17 +6,21 @@ import { useProjectsValue } from '../context'
 beforeEach(cleanup) // thanks!
 
 jest.mock('../context', () => ({
-  useProjectsValue: jest.fn(() => ({
-    projects: [
-      {
-        name: '🙌 THE OFFICE',
-        id: '1'
-      }
-    ]
-  }))
+  useProjectsValue: jest.fn(),
 }))
 
 describe('<ProjectOverlay', () => {
+  beforeEach(() => {
+    useProjectsValue.mockImplementation(() => ({
+      projects: [
+        {
+          name: '🙌 THE OFFICE',
+          id: '1',
+        },
+      ],
+    }))
+  })
+
   afterEach(() => {
     jest.clearAllMocks()
   })
@@ -62,7 +66,7 @@ describe('<ProjectOverlay', () => {
   describe('Failure', () => {
     it('does not render the project overlay with any projects', () => {
       useProjectsValue.mockImplementation(() => ({
-        projects: []
+        projects: [],
       }))
 
       const { queryByTestId } = render(<ProjectOverlay showProjectOverlay />)
