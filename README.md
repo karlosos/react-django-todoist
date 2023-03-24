@@ -35,6 +35,7 @@ I've learnt a lot from this project. Some concepts that I've grasped:
 
 ### Backend
 - `git clone https://github.com/karlosos/react-todoist/`
+- `cd react-todoist/backend`
 - `virtualenv .venv`
 - `.venv\Scripts\activate` or `source .venv/bin/activate`
 - `pip install -r requirements.txt`
@@ -44,6 +45,7 @@ I've learnt a lot from this project. Some concepts that I've grasped:
 - Open [http://127.0.0.1:8000/api/v1/](http://127.0.0.1:8000/api/v1/) or [http://127.0.0.1:8000/swagger/](http://127.0.0.1:8000/swagger/) to view documentation.
 
 ### Frontend
+- `cd react-todoist/frontend`
 - `npm run install`
 - `npm start`
 - Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
