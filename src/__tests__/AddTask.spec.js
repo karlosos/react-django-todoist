@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, fireEvent, cleanup, wait } from '@testing-library/react'
+import { render, fireEvent, cleanup, waitFor, waitForElementToBeRemoved, screen } from '@testing-library/react'
 import { AddTask } from '../components/AddTask'
 import { useSelectedProjectValue } from '../context'
 import axios from 'axios'
@@ -7,27 +7,21 @@ import axios from 'axios'
 beforeEach(cleanup)
 
 jest.mock('../context', () => ({
-  useSelectedProjectValue: jest.fn(() => ({
-    selectedProject: '1',
-    tasks: [],
-    forceUpdateTasks: jest.fn()
-  })),
-  useProjectsValue: jest.fn(() => ({ projects: [] }))
+  useSelectedProjectValue: jest.fn(),
+  useProjectsValue: () => ({ projects: [] }),
 }))
 
 jest.mock('axios')
 
-// jest.mock('../firebase', () => ({
-//   firebase: {
-//     firestore: jest.fn(() => ({
-//       collection: jest.fn(() => ({
-//         add: jest.fn(() => Promise.resolve('Never mock firebase'))
-//       }))
-//     }))
-//   }
-// }))
-
 describe('<AddTask />', () => {
+  beforeEach(() => {
+    useSelectedProjectValue.mockImplementation(() => ({
+      selectedProject: '1',
+      tasks: [],
+      forceUpdateTasks: jest.fn(),
+    }))
+  })
+
   afterEach(() => {
     jest.clearAllMocks()
   })
@@ -159,7 +153,7 @@ describe('<AddTask />', () => {
 
     it('renders <AddTask /> and adds a task to TODAY', async () => {
       useSelectedProjectValue.mockImplementation(() => ({
-        selectedProject: 'TODAY'
+        selectedProject: 'TODAY',
       }))
       axios.post.mockImplementation((taskData) => Promise.resolve({}))
 
@@ -177,19 +171,19 @@ describe('<AddTask />', () => {
       expect(queryByTestId('add-task-content')).toBeTruthy()
 
       fireEvent.input(queryByTestId('add-task-content'), {
-        target: { innerHTML: 'I am a new task and I am amazing!' }
+        target: { innerHTML: 'I am a new task and I am amazing!' },
       })
       expect(queryByTestId('add-task-content').innerHTML).toBe(
         'I am a new task and I am amazing!'
       )
 
       fireEvent.click(queryByTestId('add-task'))
-      await wait(() => expect(setShowQuickAddTask).toHaveBeenCalled())
+      await waitFor(() => expect(setShowQuickAddTask).toHaveBeenCalled())
     })
 
     it('renders <AddTask /> and adds a task to NEXT_7', async () => {
       useSelectedProjectValue.mockImplementation(() => ({
-        selectedProject: 'NEXT_7'
+        selectedProject: 'NEXT_7',
       }))
       axios.post.mockImplementation((taskData) => Promise.resolve({}))
 
@@ -207,19 +201,19 @@ describe('<AddTask />', () => {
       expect(queryByTestId('add-task-content')).toBeTruthy()
 
       fireEvent.input(queryByTestId('add-task-content'), {
-        target: { innerHTML: 'I am a new task and I am amazing!' }
+        target: { innerHTML: 'I am a new task and I am amazing!' },
       })
       expect(queryByTestId('add-task-content').innerHTML).toBe(
         'I am a new task and I am amazing!'
       )
 
       fireEvent.click(queryByTestId('add-task'))
-      await wait(() => expect(setShowQuickAddTask).toHaveBeenCalled())
+      await waitFor(() => expect(setShowQuickAddTask).toHaveBeenCalled())
     })
 
     it('renders <AddTask /> and adds a task with a task date of TODAY', async () => {
       useSelectedProjectValue.mockImplementation(() => ({
-        selectedProject: '1'
+        selectedProject: '1',
       }))
       axios.post.mockImplementation((taskData) => Promise.resolve({}))
 
@@ -238,7 +232,7 @@ describe('<AddTask />', () => {
       expect(queryByTestId('add-task-main')).toBeTruthy()
 
       fireEvent.input(queryByTestId('add-task-content'), {
-        target: { innerHTML: 'I am a new task and I am amazing!' }
+        target: { innerHTML: 'I am a new task and I am amazing!' },
       })
       expect(queryByTestId('add-task-content').innerHTML).toBe(
         'I am a new task and I am amazing!'
@@ -257,12 +251,14 @@ describe('<AddTask />', () => {
       expect(queryByTestId('task-date-overlay')).toBeFalsy()
 
       fireEvent.click(queryByTestId('add-task'))
-      await wait()
+      await waitFor(() => expect(queryByTestId('add-task-content').innerHTML).toBe(
+        ''
+      ))
     })
 
     it('renders <AddTask /> and adds a task with a task date of TOMORROW', async () => {
       useSelectedProjectValue.mockImplementation(() => ({
-        selectedProject: '1'
+        selectedProject: '1',
       }))
       axios.post.mockImplementation((taskData) => Promise.resolve({}))
 
@@ -281,7 +277,7 @@ describe('<AddTask />', () => {
       expect(queryByTestId('add-task-main')).toBeTruthy()
 
       fireEvent.input(queryByTestId('add-task-content'), {
-        target: { innerHTML: 'I am a new task and I am amazing!' }
+        target: { innerHTML: 'I am a new task and I am amazing!' },
       })
       expect(queryByTestId('add-task-content').innerHTML).toBe(
         'I am a new task and I am amazing!'
@@ -300,12 +296,14 @@ describe('<AddTask />', () => {
       expect(queryByTestId('task-date-overlay')).toBeFalsy()
 
       fireEvent.click(queryByTestId('add-task'))
-      await wait()
+      await waitFor(() => expect(queryByTestId('add-task-content').innerHTML).toBe(
+        ''
+      ))
     })
 
     it('renders <AddTask /> and adds a task with a task date of NEXT_7', async () => {
       useSelectedProjectValue.mockImplementation(() => ({
-        selectedProject: '1'
+        selectedProject: '1',
       }))
       axios.post.mockImplementation((taskData) => Promise.resolve({}))
 
@@ -326,7 +324,7 @@ describe('<AddTask />', () => {
       expect(queryByTestId('add-task-main')).toBeTruthy()
 
       fireEvent.input(queryByTestId('add-task-content'), {
-        target: { innerHTML: 'I am a new task and I am amazing!' }
+        target: { innerHTML: 'I am a new task and I am amazing!' },
       })
       expect(queryByTestId('add-task-content').innerHTML).toBe(
         'I am a new task and I am amazing!'
@@ -345,13 +343,15 @@ describe('<AddTask />', () => {
       expect(queryByTestId('task-date-overlay')).toBeFalsy()
 
       fireEvent.click(queryByTestId('add-task'))
-      await wait()
+      await waitFor(() => expect(queryByTestId('add-task-content').innerHTML).toBe(
+        ''
+      ))
     })
   })
 
   it('renders <AddTask />, typin enter should do nothing, then adds a task to TODAY', async () => {
     useSelectedProjectValue.mockImplementation(() => ({
-      selectedProject: 'TODAY'
+      selectedProject: 'TODAY',
     }))
     axios.post.mockImplementation((taskData) => Promise.resolve({}))
 
@@ -369,7 +369,7 @@ describe('<AddTask />', () => {
     expect(queryByTestId('add-task-content')).toBeTruthy()
 
     fireEvent.input(queryByTestId('add-task-content'), {
-      target: { innerHTML: 'I am a new task and I am amazing!' }
+      target: { innerHTML: 'I am a new task and I am amazing!' },
     })
     expect(queryByTestId('add-task-content').innerHTML).toBe(
       'I am a new task and I am amazing!'
@@ -388,6 +388,6 @@ describe('<AddTask />', () => {
     // https://github.com/testing-library/react-testing-library/issues/680
 
     fireEvent.click(queryByTestId('add-task'))
-    await wait(() => expect(setShowQuickAddTask).toHaveBeenCalled())
+    await waitFor(() => expect(setShowQuickAddTask).toHaveBeenCalled())
   })
 })

@@ -1,18 +1,15 @@
 import React from 'react'
-import { render, fireEvent, cleanup } from '@testing-library/react'
+import { render, fireEvent } from '@testing-library/react'
 import { IndividualProject } from '../components/IndividualProject'
 import axios from 'axios'
 
-beforeEach(cleanup) // thanks!
-
 jest.mock('axios')
-axios.delete.mockImplementation(() => Promise.resolve({}))
 
 jest.mock('../context', () => ({
-  useSelectedProjectValue: jest.fn(() => ({
-    setSelectedProject: jest.fn(() => 'INBOX')
-  })),
-  useProjectsValue: jest.fn(() => ({
+  useSelectedProjectValue: () => ({
+    setSelectedProject: () => 'INBOX',
+  }),
+  useProjectsValue: () => ({
     setProjects: jest.fn(),
     projects: [
       {
@@ -22,7 +19,7 @@ jest.mock('../context', () => ({
         docId: 'michael-scott'
       }
     ]
-  }))
+  })
 }))
 
 describe('<IndividualProject />', () => {
@@ -40,6 +37,7 @@ describe('<IndividualProject />', () => {
     })
 
     it('renders the delete overlay and then deletes a project using onClick', () => {
+      axios.delete.mockResolvedValueOnce(undefined)
       const { queryByTestId, getByText } = render(
         <IndividualProject project={project} active />
       )

@@ -107,7 +107,9 @@ $ git push heroku master
 - support from Node v12 to Node v18
 - cleanup `package.json` with proper 'devDependencies'
 
-- [ ] fix tests
+- [x] fix tests
 - [ ] update ci
 - [ ] move backend and frontend to separate directories
 - [ ] msw mocks
+- [ ] write down supported versions (update README)
+- [ ] review tests. make them modern (without much mocking)

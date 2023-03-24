@@ -1,23 +1,21 @@
 import React from 'react'
-import { render, cleanup, fireEvent } from '@testing-library/react'
+import { render, fireEvent } from '@testing-library/react'
 import { Sidebar } from '../components/layout/Sidebar'
 
 jest.mock('../context', () => ({
-  useSelectedProjectValue: jest.fn(() => ({
-    setSelectedProject: jest.fn(() => 'INBOX')
-  })),
-  useProjectsValue: jest.fn(() => ({
+  useSelectedProjectValue: () => ({
+    setSelectedProject: () => 'INBOX',
+  }),
+  useProjectsValue: () => ({
     setProjects: jest.fn(),
     projects: [
       {
         name: '🙌 THE OFFICE',
-        id: '1'
-      }
-    ]
-  }))
+        id: '1',
+      },
+    ],
+  }),
 }))
-
-beforeEach(cleanup)
 
 describe('<Sidebar />', () => {
   describe('Success', () => {

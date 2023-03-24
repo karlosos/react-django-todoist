@@ -1,14 +1,13 @@
 import React from 'react'
-import { render, cleanup, fireEvent, wait } from '@testing-library/react'
+import { render, cleanup, fireEvent, wait, within, screen, waitForElementToBeRemoved } from '@testing-library/react'
 import { AddProject } from '../components/AddProject'
 import axios from 'axios'
 
 jest.mock('axios')
-axios.post.mockImplementation((projectData) => Promise.resolve({}))
 
 jest.mock('../context', () => ({
   useSelectedProjectValue: jest.fn(),
-  useProjectsValue: jest.fn(() => ({
+  useProjectsValue: () => ({
     projects: [
       {
         name: '🙌 THE OFFICE',
@@ -42,7 +41,7 @@ jest.mock('../context', () => ({
       }
     ],
     setProjects: jest.fn()
-  }))
+  })
 }))
 
 beforeEach(cleanup)
@@ -55,6 +54,8 @@ describe('<AddProject />', () => {
     })
 
     it('renders <AddProject /> and adds a project using onClick', async () => {
+      axios.post.mockImplementation((projectData) => Promise.resolve({}))
+
       const { queryByTestId } = render(<AddProject shouldShow />)
       expect(queryByTestId('add-project')).toBeTruthy()
 
@@ -65,7 +66,7 @@ describe('<AddProject />', () => {
         'Best project in the world!'
       )
       fireEvent.click(queryByTestId('add-project-submit'))
-      await wait()
+      await waitForElementToBeRemoved(() => screen.getByTestId('project-name'));
     })
 
     it('renders <AddProject /> and adds a project using onKeyDown', () => {

@@ -8,9 +8,9 @@ beforeEach(cleanup) // clean the DOM!
 jest.mock('axios')
 
 jest.mock('../context', () => ({
-  useSelectedProjectValue: jest.fn(() => ({
+  useSelectedProjectValue: () => ({
     forceUpdateTasks: jest.fn()
-  }))
+  })
 }))
 
 describe('<Checkbox />', () => {

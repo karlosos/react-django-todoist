@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import { Tasks } from '../components/Tasks'
 import { useSelectedProjectValue } from '../context'
 
@@ -9,40 +9,37 @@ const tasks = [
     archived: false,
     date: '21/07/2019',
     project: 1,
-    task:
-          'Would I rather be feared or loved? Easy. Both. I want people to be afraid of how much they love me.'
-  }
+    task: 'Would I rather be feared or loved? Easy. Both. I want people to be afraid of how much they love me.',
+  },
 ]
 
 jest.mock('../context', () => ({
   useSelectedProjectValue: jest.fn(),
-  useProjectsValue: jest.fn(() => ({
+  useProjectsValue: () => ({
     projects: [
       {
         name: '🙌 THE OFFICE',
-        id: '1'
+        id: '1',
       },
       {
         name: '🚀 DAILY',
-        id: '2'
+        id: '2',
       },
       {
         name: '🎯 FUTURE',
-        id: '3'
+        id: '3',
       },
       {
         name: '📚 WORDS',
-        id: '4'
+        id: '4',
       },
       {
         name: '🎵 MUSIC',
-        id: '5'
-      }
-    ]
-  }))
+        id: '5',
+      },
+    ],
+  }),
 }))
-
-beforeEach(cleanup)
 
 describe('<Tasks />', () => {
   afterEach(() => {
@@ -54,7 +51,7 @@ describe('<Tasks />', () => {
       setSelectedProject: jest.fn(() => 'INBOX'),
       selectedProject: 'INBOX',
       tasks: tasks,
-      forceUpdateTasks: jest.fn()
+      forceUpdateTasks: jest.fn(),
     }))
 
     const { queryByTestId } = render(<Tasks />)
@@ -67,7 +64,7 @@ describe('<Tasks />', () => {
       setSelectedProject: jest.fn(() => '1'),
       selectedProject: '1',
       tasks: tasks,
-      forceUpdateTasks: jest.fn()
+      forceUpdateTasks: jest.fn(),
     }))
 
     const { queryByTestId } = render(<Tasks />)
@@ -80,7 +77,7 @@ describe('<Tasks />', () => {
       setSelectedProject: jest.fn(() => 'INBOX'),
       selectedProject: 'INBOX',
       tasks: tasks,
-      forceUpdateTasks: jest.fn()
+      forceUpdateTasks: jest.fn(),
     }))
 
     const { queryByTestId } = render(<Tasks />)
